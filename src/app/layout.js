@@ -1,4 +1,5 @@
 import "./globals.css";
+import SiteChrome from "@/components/SiteChrome";
 
 export const metadata = {
   title: "Innovision",
@@ -20,8 +21,11 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
       </head>
+
       <body>
-        <div id="root">{children}</div>
+        <div id="root">
+          <SiteChrome>{children}</SiteChrome>
+        </div>
       </body>
     </html>
   );

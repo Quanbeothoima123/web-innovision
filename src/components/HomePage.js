@@ -3,12 +3,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import Lenis from "@studio-freight/lenis";
 import { motion } from "framer-motion";
-import Header from "./Header";
-import { Footer } from "./Footer";
 
 export default function HomePage() {
   const [scrollY, setScrollY] = useState(0);
-  const [isScrolled, setIsScrolled] = useState(false);
   const requestRef = useRef();
 
   const [achievementIndex, setAchievementIndex] = useState(0);
@@ -103,7 +100,6 @@ export default function HomePage() {
 
     lenis.on("scroll", (e) => {
       setScrollY(e.scroll);
-      setIsScrolled(e.scroll > 50);
     });
 
     return () => {
@@ -123,8 +119,6 @@ export default function HomePage() {
 
   return (
     <div className="bg-white min-h-screen w-full overflow-x-hidden font-['Montserrat']">
-      <Header isScrolled={isScrolled} />
-
       {/* HERO */}
       <div className="relative h-screen w-full flex items-center justify-center overflow-hidden">
         <div
@@ -316,8 +310,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 }

@@ -70,7 +70,7 @@ const Solutions = () => {
         <div
           className="absolute inset-0 z-0 bg-cover bg-center"
           style={{
-            backgroundImage: "url('/banner-solutions.jpg')",
+            backgroundImage: "url('/banner-solutions.png')",
             transform: `translateY(${scrollY * 0.4}px)`,
           }}
         />

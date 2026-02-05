@@ -66,7 +66,7 @@ const AboutUs = () => {
         <div
           className="absolute inset-0 z-0 bg-cover bg-center"
           style={{
-            backgroundImage: "url('/banner-aboutus.jpg')",
+            backgroundImage: "url('/banner-aboutus.png')",
             transform: `translateY(${scrollY * 0.4}px)`,
           }}
         />

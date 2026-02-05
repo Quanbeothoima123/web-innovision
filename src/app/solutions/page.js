@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import Lenis from "@studio-freight/lenis";
 import Link from "next/link";
@@ -33,56 +33,76 @@ const solutionsData = [
 ];
 
 const Solutions = () => {
+  const [scrollY, setScrollY] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
+  const requestRef = useRef(null);
 
   useEffect(() => {
-    const lenis = new Lenis();
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
 
     const raf = (time) => {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      requestRef.current = requestAnimationFrame(raf);
     };
-    requestAnimationFrame(raf);
 
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
+    requestRef.current = requestAnimationFrame(raf);
+
+    lenis.on("scroll", (e) => {
+      setScrollY(e.scroll || 0);
+      setIsScrolled((e.scroll || 0) > 50);
+    });
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-      // cleanup Lenis (nếu version bạn dùng có destroy)
       if (typeof lenis.destroy === "function") lenis.destroy();
+      if (requestRef.current) cancelAnimationFrame(requestRef.current);
     };
   }, []);
 
   return (
     <div className="bg-white min-h-screen font-['Montserrat'] overflow-x-hidden">
-      {/* BANNER ĐẦU TRANG */}
-      <section className="h-[60vh] flex items-center justify-center bg-gray-50 border-b border-gray-100 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 pointer-events-none">
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
-        </div>
+      {/* BANNER ĐẦU TRANG - IMPROVED VERSION */}
+      <div className="relative h-screen w-full flex items-center justify-center overflow-hidden">
+        {/* Lớp nền ảnh với hiệu ứng Parallax */}
+        <div
+          className="absolute inset-0 z-0 bg-cover bg-center"
+          style={{
+            backgroundImage: "url('/banner-solutions.jpg')",
+            transform: `translateY(${scrollY * 0.4}px)`,
+          }}
+        />
 
-        <div className="text-center relative z-10 px-6">
+        {/* Lớp phủ Gradient trắng phía trên và dưới */}
+        <div className="absolute top-0 left-0 w-full h-1/5 bg-gradient-to-b from-white via-white/40 to-transparent z-[1]" />
+        <div className="absolute bottom-0 left-0 w-full h-1/5 bg-gradient-to-t from-white via-white/40 to-transparent z-[1]" />
+
+        {/* Nội dung Banner */}
+        <div className="relative z-[2] text-left w-full max-w-[1400px] mx-auto px-6 md:px-12">
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             className="text-[44px] md:text-[72px] font-bold text-[#3c90fc] tracking-tighter uppercase"
           >
             Our Solutions
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.6 }}
-            className="text-[#474363] text-[18px] font-medium mt-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            className="mt-6 text-[16px] md:text-[18px] text-white font-medium max-w-2xl"
           >
             Empowering the future through AI-driven innovation.
           </motion.p>
         </div>
-      </section>
+      </div>
 
       {/* DANH SÁCH GIẢI PHÁP SO LE */}
-      <div className="w-full max-w-[1400px] mx-auto px-6 md:px-12 py-24 flex flex-col gap-32 md:gap-48">
+      <div className="relative z-[10] bg-white w-full max-w-[1400px] mx-auto px-6 md:px-12 py-24 flex flex-col gap-32 md:gap-48">
         {solutionsData.map((item, index) => {
           const isEven = index % 2 === 0;
 

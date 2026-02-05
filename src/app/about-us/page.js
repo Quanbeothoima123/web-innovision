@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import Lenis from "@studio-freight/lenis";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const AboutUs = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -144,13 +145,16 @@ const AboutUs = () => {
                 firmware services that drive sustainable business growth.
               </p>
 
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="mt-4 w-fit px-8 py-4 bg-[#3c90fc] text-white font-bold rounded-full shadow-lg shadow-[#3c90fc]/30 transition-all"
-              >
-                Our Projects
-              </motion.button>
+              <Link href="/portfolio">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="mt-4 w-fit px-8 py-4 bg-[#3c90fc] text-white font-bold rounded-full shadow-lg shadow-[#3c90fc]/30 transition-all hover:bg-[#2a78e4]"
+                  type="button"
+                >
+                  Our Projects
+                </motion.button>
+              </Link>
             </motion.div>
           </div>
         </div>

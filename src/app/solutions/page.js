@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Lenis from "@studio-freight/lenis";
+import Link from "next/link";
 
 const solutionsData = [
   {
@@ -13,18 +14,21 @@ const solutionsData = [
       "Natural Language Processing",
       "Real-time Q&A",
     ],
+    route: "/solutions/ai-products-2",
   },
   {
     title: "Industrial AI & Automation",
     desc: "End-to-end industrial AI solutions for computer vision inspection, failure prediction, and seamless factory system integration.",
     image: "/IndustrialAI.jpg",
     features: ["Defect Detection", "Predictive Maintenance", "IoT Integration"],
+    route: "/solutions/coming-soon",
   },
   {
     title: "Software & Firmware Development",
     desc: "Expert software engineering and embedded system development tailored for technology products and enterprise-grade solutions.",
     image: "/softwareAndFirmware.jpg",
     features: ["Custom Web/App", "Embedded C/C++", "Cloud Architecture"],
+    route: "/solutions/software-firmware-development-2",
   },
 ];
 
@@ -119,15 +123,17 @@ const Solutions = () => {
                   ))}
                 </div>
 
-                <motion.button
-                  whileHover={{ x: 10 }}
-                  className="group flex items-center gap-3 px-8 py-4 bg-[#3c90fc] text-white font-bold shadow-xl shadow-blue-100 transition-all hover:bg-[#2a78e4]"
-                >
-                  Read More
-                  <span className="transition-transform group-hover:translate-x-1">
-                    →
-                  </span>
-                </motion.button>
+                <Link href={item.route}>
+                  <motion.button
+                    whileHover={{ x: 10 }}
+                    className="group flex items-center gap-3 px-8 py-4 bg-[#3c90fc] text-white font-bold shadow-xl shadow-blue-100 transition-all hover:bg-[#2a78e4]"
+                  >
+                    Read More
+                    <span className="transition-transform group-hover:translate-x-1">
+                      →
+                    </span>
+                  </motion.button>
+                </Link>
               </motion.div>
 
               {/* PHẦN ẢNH TĨNH */}

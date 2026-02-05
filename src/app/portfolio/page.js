@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import Lenis from "@studio-freight/lenis";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Sparkles, TrendingUp, Clock, Star } from "lucide-react";
+import Link from "next/link";
 
 /**
  * FILE: src/app/portfolio/page.js
@@ -43,6 +44,7 @@ const ALL_PROJECTS = [
       "https://images.unsplash.com/photo-1766455434433-f286f7290fb4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZWFsJTIwZXN0YXRlJTIwYnVpbGRpbmclMjBjaXR5c2NhcGV8ZW58MXx8fHwxNzcwMjIwMjk1fDA&ixlib=rb-4.1.0&q=80&w=1080",
     featured: true,
     large: true,
+    route: "/portfolio/real-estate-ai-assistant",
   },
   {
     id: "2",
@@ -54,6 +56,7 @@ const ALL_PROJECTS = [
     category: "AI Products",
     image:
       "https://images.unsplash.com/photo-1639503547276-90230c4a4198?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmaW50ZWNoJTIwc2VjdXJpdHklMjB2ZXJpZmljYXRpb258ZW58MXx8fHwxNzcwMjIwMjk1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    route: "/portfolio/fintech-verification-ai",
   },
   {
     id: "3",
@@ -65,6 +68,7 @@ const ALL_PROJECTS = [
     category: "AI Products",
     image:
       "https://images.unsplash.com/photo-1604218118561-4bc4427d1e7e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxnb3Zlcm5tZW50JTIwZG9jdW1lbnRzJTIwb2ZmaWNpYWx8ZW58MXx8fHwxNzcwMjIwMjk1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    route: "/portfolio/government-document-ai-2",
   },
   {
     id: "4",
@@ -76,6 +80,7 @@ const ALL_PROJECTS = [
     category: "AI Products",
     image:
       "https://images.unsplash.com/photo-1726066012749-f81bf4422d4e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHxtYXJrZXRpbmclMjBjb250ZW50JTIwY3JlYXRpb258ZW58MXx8fHwxNzcwMjIwMjk2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    route: "/portfolio/marketing-content-assistant-2",
   },
   {
     id: "5",
@@ -88,6 +93,7 @@ const ALL_PROJECTS = [
     image:
       "https://images.unsplash.com/photo-1762330465633-2f517c1782a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWIlMjBwbGF0Zm9ybSUyMHRlY2hub2xvZ3l8ZW58MXx8fHwxNzcwMjIwMjk2fDA&ixlib=rb-4.1.0&q=80&w=1080",
     featured: true,
+    route: "/portfolio/high-traffic-web-platform",
   },
 ];
 
@@ -159,6 +165,7 @@ function BentoProjectCard({
   featured = false,
   large = false,
   index,
+  route,
 }) {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -267,19 +274,21 @@ function BentoProjectCard({
             ))}
           </div>
 
-          <motion.button
-            className="inline-flex items-center gap-2 text-blue-600 font-semibold text-sm group/cta"
-            whileHover={{ x: 4 }}
-            type="button"
-          >
-            <span>Learn more</span>
-            <motion.div
-              animate={{ x: isHovered ? 4 : 0 }}
-              transition={{ duration: 0.2 }}
+          <Link href={route}>
+            <motion.button
+              className="inline-flex items-center gap-2 text-blue-600 font-semibold text-sm group/cta"
+              whileHover={{ x: 4 }}
+              type="button"
             >
-              <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
-            </motion.div>
-          </motion.button>
+              <span>Learn more</span>
+              <motion.div
+                animate={{ x: isHovered ? 4 : 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
+              </motion.div>
+            </motion.button>
+          </Link>
         </div>
       </motion.div>
     </motion.div>
@@ -344,6 +353,7 @@ function BentoGrid({ projects, activeTab }) {
                   featured={project.featured}
                   large={project.large}
                   index={index}
+                  route={project.route}
                 />
               ))
             ) : (

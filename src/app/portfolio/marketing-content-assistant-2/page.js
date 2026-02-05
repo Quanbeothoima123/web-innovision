@@ -1,17 +1,107 @@
+import PortfolioCaseTemplate from "@/components/portfolio/PortfolioCaseTemplate";
+
 export const metadata = {
-  title: "Marketing Content Assistant 2",
+  title: "Marketing Content AI",
   description:
-    "Trợ lý nội dung marketing: gợi ý ý tưởng, viết nháp, tối ưu thông điệp theo ngành.",
-  alternates: { canonical: "/portfolio/marketing-content-assistant-2/" },
+    "LLM content assistant that generates listings, promotional copy, and social posts with brand-consistent tone.",
+  alternates: { canonical: "/portfolio/marketing-content-ai/" },
 };
 
 export default function Page() {
   return (
-    <div className="space-y-2">
-      <h1 className="text-2xl font-semibold">Marketing Content Assistant 2</h1>
-      <p className="text-neutral-600">
-        Route: /portfolio/marketing-content-assistant-2
-      </p>
-    </div>
+    <PortfolioCaseTemplate
+      title="Marketing Content AI"
+      subtitle="LLM fine-tuned with brand voice and product data to automate listings, promotional copy, and multilingual social posts."
+      problem="Marketing teams in real estate, retail, and e-commerce spend excessive time and resources creating content for listings, social media, and product descriptions. Outsourcing to agencies adds cost and often delays campaigns."
+      solution={[
+        "LLM fine-tuned with brand voice and product data.",
+        "Automatically generates property listings, promotional copy, and social media posts.",
+        "Ensures consistent tone and style across channels while supporting multilingual output.",
+      ]}
+      primaryImage="/demo/marketing/primary.png"
+      secondaryImage="/demo/marketing/secondary.png"
+      captions={[
+        "Marketing content automation with brand consistency",
+        "Social post generation with multilingual output",
+      ]}
+      verticalLabel={"CONTENT\nAI"}
+      bigNumber="03"
+      keyFeatures={[
+        "Brand voice tuning (tone, vocabulary, formatting)",
+        "Multilingual output (VN/EN)",
+        "Templates for listing / promo / social post",
+        "Channel-aware formatting (FB, LinkedIn, Email, Web)",
+      ]}
+      io={[
+        {
+          input:
+            "“Generate a social post for a 2-bedroom apartment near Cau Giay, highlighting lake view and special promotion.”",
+          system: [
+            "Detect intent and required format for the channel",
+            "Apply brand tone + structure template",
+            "Generate VN/EN versions and run style consistency checks",
+          ],
+          output:
+            "A ready-to-publish Vietnamese & English post with brand-consistent tone.",
+        },
+        {
+          input: "Generate 10 variants for the same campaign for A/B testing",
+          system: [
+            "Keep key facts fixed, vary hooks/CTA/wording",
+            "Control length, keywords, and prohibited claims",
+            "Deduplicate and score quality before export",
+          ],
+          output:
+            "10 variations produced with consistent brand voice and clear CTA.",
+        },
+      ]}
+      preMetricsBlocks={[
+        {
+          type: "split",
+          mode: "io-simple",
+          image: "/demo/marketing/io.png",
+          imageSide: "right",
+          input:
+            "“Generate a social post for a 2-bedroom apartment near Cau Giay, highlighting lake view and special promotion.”",
+          output:
+            "A ready-to-publish Vietnamese & English post with brand-consistent tone.",
+        },
+      ]}
+      // ✅ TOP: đúng 3 card như screenshot
+      metricsTop={[
+        {
+          label: "Supported Channels",
+          description: "Email / Facebook / LinkedIn / Web",
+          icons: ["mail", "facebook", "linkedin", "web"], // ✅ icon row
+          showTrend: false,
+        },
+        {
+          value: "<2s",
+          label: "Generation Speed",
+          description: "For long-form content generation",
+          showTrend: false,
+        },
+        {
+          value: "95%+",
+          label: "Brand Consistency",
+          description: "Brand style adherence rate",
+          showTrend: false,
+        },
+      ]}
+      metricsBottom={[
+        {
+          value: "3–5x Faster",
+          label: "Content Generation Speed",
+          description: "Dramatically accelerated content creation process",
+          showTrend: false,
+        },
+        {
+          value: "~50%",
+          label: "Cost Reduction",
+          description: "Reduced outsourcing and agency costs",
+          showTrend: false,
+        },
+      ]}
+    />
   );
 }

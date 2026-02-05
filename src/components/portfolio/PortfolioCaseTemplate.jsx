@@ -9,6 +9,7 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
+import Lenis from "@studio-freight/lenis";
 
 /** Icons inline để KHÔNG phụ thuộc lucide-react */
 function IconX({ className = "" }) {
@@ -55,7 +56,116 @@ function IconTrendingUp({ className = "" }) {
   );
 }
 
-/** Metric Card */
+/** ✅ NEW: Icons for Supported Channels (inline) */
+function IconMail({ className = "" }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M4 6.5h16v11H4v-11Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M4.5 7l7.5 6 7.5-6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+function IconFacebook({ className = "" }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M14 8h2V5h-2c-2.2 0-4 1.8-4 4v2H8v3h2v6h3v-6h2.6l.4-3H13V9c0-.6.4-1 1-1Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+function IconLinkedIn({ className = "" }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path d="M6.5 9.5H4v10h2.5v-10Z" fill="currentColor" />
+      <path
+        d="M5.25 4.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"
+        fill="currentColor"
+      />
+      <path
+        d="M20 19.5h-2.5v-5.2c0-1.3-.5-2.2-1.7-2.2-1 0-1.6.7-1.9 1.3-.1.2-.1.6-.1.9v5.2H11.3v-10h2.4v1.4c.3-.6 1.2-1.6 2.9-1.6 2.1 0 3.4 1.4 3.4 4.3v5.9Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+function IconGlobe({ className = "" }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <path
+        d="M3.5 12h17"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M12 3c2.5 2.6 4 5.6 4 9s-1.5 6.4-4 9c-2.5-2.6-4-5.6-4-9s1.5-6.4 4-9Z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+    </svg>
+  );
+}
+
+const metricIconMap = {
+  mail: IconMail,
+  facebook: IconFacebook,
+  linkedin: IconLinkedIn,
+  web: IconGlobe,
+};
+
+/** Utils */
+function toLines(v) {
+  if (!v) return [];
+  if (Array.isArray(v)) return v.filter(Boolean);
+  return String(v)
+    .split("\n")
+    .map((x) => x.trim())
+    .filter(Boolean);
+}
+function hasAnyText(v) {
+  if (!v) return false;
+  if (Array.isArray(v)) return v.some((x) => String(x || "").trim().length);
+  return String(v).trim().length > 0;
+}
+
+/** ✅ UPDATED Metric Card: support icons + optional trend */
 function MetricCard({
   value,
   label,
@@ -63,6 +173,7 @@ function MetricCard({
   delay = 0,
   span = 1,
   showTrend = true,
+  icons = [], // ✅ NEW: ["mail","facebook","linkedin","web"]
 }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-15% 0px" });
@@ -81,11 +192,24 @@ function MetricCard({
       ].join(" ")}
     >
       <div className="flex items-start justify-between gap-4">
-        <div>
-          <div className="text-3xl font-extrabold tracking-tight text-white">
-            {value}
-          </div>
-          <div className="mt-2 text-sm font-semibold text-white/90">
+        <div className="min-w-0">
+          {/* ✅ If icons exist => show icon row, else show value */}
+          {icons?.length ? (
+            <div className="flex items-center gap-4 text-white/90">
+              {icons.map((k, i) => {
+                const Cmp = metricIconMap[k];
+                return Cmp ? (
+                  <Cmp key={`${k}-${i}`} className="h-7 w-7" />
+                ) : null;
+              })}
+            </div>
+          ) : value ? (
+            <div className="text-3xl font-extrabold tracking-tight text-white">
+              {value}
+            </div>
+          ) : null}
+
+          <div className="mt-4 text-sm font-semibold text-white/90">
             {label}
           </div>
         </div>
@@ -97,12 +221,14 @@ function MetricCard({
         )}
       </div>
 
-      <div className="mt-2 text-xs text-white/75">{description}</div>
+      {description ? (
+        <div className="mt-2 text-xs text-white/75">{description}</div>
+      ) : null}
     </motion.div>
   );
 }
 
-/** Content card (giữ Problem/Solution ở trang chính) */
+/** Content card: Problem / Solution (string hoặc array bullets) */
 function ContentCard({
   title,
   subtitle,
@@ -112,6 +238,15 @@ function ContentCard({
   problemTitle = "Problem",
   solutionTitle = "Solution",
 }) {
+  const problemLines = useMemo(
+    () => (Array.isArray(problem) ? problem : null),
+    [problem],
+  );
+  const solutionLines = useMemo(
+    () => (Array.isArray(solution) ? solution : null),
+    [solution],
+  );
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 22 }}
@@ -148,7 +283,21 @@ function ContentCard({
           <h3 className="text-sm font-bold text-neutral-900 mb-2">
             {problemTitle}
           </h3>
-          <p className="text-sm leading-relaxed text-neutral-600">{problem}</p>
+
+          {problemLines ? (
+            <ul className="space-y-2 text-sm text-neutral-600">
+              {problemLines.map((x, i) => (
+                <li key={i} className="flex gap-3 leading-relaxed">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-blue-500 shrink-0" />
+                  <span>{x}</span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-sm leading-relaxed text-neutral-600">
+              {problem}
+            </p>
+          )}
         </div>
 
         <div className="h-px bg-neutral-100" />
@@ -157,7 +306,21 @@ function ContentCard({
           <h3 className="text-sm font-bold text-neutral-900 mb-2">
             {solutionTitle}
           </h3>
-          <p className="text-sm leading-relaxed text-neutral-600">{solution}</p>
+
+          {solutionLines ? (
+            <ul className="space-y-2 text-sm text-neutral-600">
+              {solutionLines.map((x, i) => (
+                <li key={i} className="flex gap-3 leading-relaxed">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-blue-500 shrink-0" />
+                  <span>{x}</span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-sm leading-relaxed text-neutral-600">
+              {solution}
+            </p>
+          )}
 
           {mockImage ? (
             <div className="mt-8 rounded-2xl border border-neutral-200 bg-neutral-50 p-4">
@@ -174,7 +337,7 @@ function ContentCard({
   );
 }
 
-/** Photo stack (label đọc từ trên xuống dưới + bám sát ảnh primary) */
+/** Photo stack (hero) */
 function PhotoStackParallax({
   primaryImage,
   secondaryImage,
@@ -192,7 +355,6 @@ function PhotoStackParallax({
 
   const number = { left: 40, bottom: 34, size: 130 };
 
-  // Label bám theo ảnh primary
   const labelCfg = { gapFromPrimary: 30, insetTop: 8, fontSize: 16 };
   const labelLeft = Math.max(8, primary.left - labelCfg.gapFromPrimary);
   const labelTop = primary.top + labelCfg.insetTop;
@@ -208,7 +370,7 @@ function PhotoStackParallax({
 
   return (
     <div ref={containerRef} className="relative" style={{ height: H }}>
-      {/* Label: đọc từ trên xuống dưới */}
+      {/* Label */}
       <div
         className="absolute z-30 select-none pointer-events-none"
         style={{
@@ -232,7 +394,7 @@ function PhotoStackParallax({
         </div>
       </div>
 
-      {/* Số 25 */}
+      {/* Number */}
       <div
         className="absolute z-30 select-none"
         style={{ left: number.left, bottom: number.bottom }}
@@ -245,7 +407,7 @@ function PhotoStackParallax({
         </div>
       </div>
 
-      {/* Ảnh dưới */}
+      {/* Secondary */}
       <motion.button
         type="button"
         style={{
@@ -254,16 +416,14 @@ function PhotoStackParallax({
           width: secondary.w,
           height: secondary.h,
           y: sY,
-          rotate: 0,
         }}
         className={[
           "absolute rounded-[34px] overflow-hidden bg-white cursor-pointer",
-          "shadow-[0_18px_48px_rgba(0,0,0,0.14)]",
-          "transform-gpu",
+          "shadow-[0_18px_48px_rgba(0,0,0,0.14)] transform-gpu",
           isExpanded ? "opacity-0 pointer-events-none" : "opacity-100",
         ].join(" ")}
         onClick={() => onImageClick(secondaryImage, 1)}
-        whileHover={{ scale: 1.012, rotate: 0 }}
+        whileHover={{ scale: 1.012 }}
         transition={{ type: "spring", stiffness: 260, damping: 22 }}
       >
         <motion.img
@@ -275,7 +435,7 @@ function PhotoStackParallax({
         />
       </motion.button>
 
-      {/* Ảnh trên */}
+      {/* Primary */}
       <motion.button
         type="button"
         style={{
@@ -284,16 +444,14 @@ function PhotoStackParallax({
           width: primary.w,
           height: primary.h,
           y: pY,
-          rotate: 0,
         }}
         className={[
           "absolute rounded-[34px] overflow-hidden bg-white cursor-pointer z-20",
-          "shadow-[0_24px_70px_rgba(0,0,0,0.18)]",
-          "transform-gpu",
+          "shadow-[0_24px_70px_rgba(0,0,0,0.18)] transform-gpu",
           isExpanded ? "opacity-0 pointer-events-none" : "opacity-100",
         ].join(" ")}
         onClick={() => onImageClick(primaryImage, 0)}
-        whileHover={{ scale: 1.02, rotate: 0 }}
+        whileHover={{ scale: 1.02 }}
         transition={{ type: "spring", stiffness: 280, damping: 22 }}
       >
         <motion.img
@@ -308,14 +466,199 @@ function PhotoStackParallax({
   );
 }
 
-/** Modal: HIỂN THỊ INPUT / SYSTEM / OUTPUT theo ảnh */
+/** Pre-metrics block: image only */
+function PreMetricsImageBlock({
+  title,
+  subtitle,
+  image,
+  alt = "Preview image",
+}) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-10% 0px" });
+
+  return (
+    <motion.section
+      ref={ref}
+      initial={{ opacity: 0, y: 18 }}
+      animate={isInView ? { opacity: 1, y: 0 } : undefined}
+      transition={{ duration: 0.7, ease: "easeOut" }}
+      className="w-full"
+    >
+      {(title || subtitle) && (
+        <div className="text-center mb-10">
+          {title ? (
+            <h2 className="text-3xl md:text-5xl font-extrabold text-neutral-900 tracking-tight">
+              {title}
+            </h2>
+          ) : null}
+          {subtitle ? (
+            <p className="mt-3 text-base md:text-lg text-neutral-500">
+              {subtitle}
+            </p>
+          ) : null}
+        </div>
+      )}
+
+      <div className="rounded-3xl border border-neutral-200 bg-white shadow-sm overflow-hidden">
+        <img src={image} alt={alt} className="w-full h-auto" />
+      </div>
+    </motion.section>
+  );
+}
+
+/** Pre-metrics block: split (IO hoặc Solution-only), image optional */
+function PreMetricsSplitBlock({
+  title,
+  mode = "io", // "io" | "solution"
+  image,
+  alt = "Section image",
+  imageSide = "right", // "left" | "right"
+  input,
+  system,
+  output,
+  bullets = [],
+}) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-10% 0px" });
+
+  const systemLines = useMemo(() => toLines(system), [system]);
+
+  const BulletDot = () => (
+    <span className="inline-flex h-2.5 w-2.5 rounded-full bg-blue-500 shadow-[0_0_0_4px_rgba(59,130,246,0.12)]" />
+  );
+
+  const TextCol = (
+    <div className="space-y-8">
+      {title ? (
+        <h3 className="text-2xl md:text-3xl font-bold text-neutral-900">
+          {title}
+        </h3>
+      ) : null}
+
+      {mode === "io" ? (
+        <div className="space-y-8">
+          <div>
+            <div className="text-xs font-bold tracking-wider text-neutral-500 mb-2">
+              INPUT
+            </div>
+            <p className="text-sm text-neutral-700 leading-relaxed whitespace-pre-line">
+              {input || "—"}
+            </p>
+          </div>
+
+          <div className="h-px bg-neutral-100" />
+
+          <div>
+            <div className="text-xs font-bold tracking-wider text-neutral-500 mb-3">
+              SYSTEM
+            </div>
+
+            {systemLines.length ? (
+              <ul className="space-y-3">
+                {systemLines.map((t, i) => (
+                  <li
+                    key={i}
+                    className="flex gap-3 text-sm text-neutral-700 leading-relaxed"
+                  >
+                    <span className="mt-1.5">
+                      <BulletDot />
+                    </span>
+                    <span>{t}</span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-sm text-neutral-700 leading-relaxed">—</p>
+            )}
+          </div>
+
+          <div className="h-px bg-neutral-100" />
+
+          <div>
+            <div className="text-xs font-bold tracking-wider text-neutral-500 mb-2">
+              OUTPUT
+            </div>
+            <p className="text-sm text-neutral-700 leading-relaxed whitespace-pre-line">
+              {output || "—"}
+            </p>
+          </div>
+        </div>
+      ) : (
+        <div>
+          <div className="text-xs font-bold tracking-wider text-neutral-500 mb-3">
+            SOLUTION
+          </div>
+          {bullets?.length ? (
+            <ul className="space-y-3">
+              {bullets.map((t, i) => (
+                <li
+                  key={i}
+                  className="flex gap-3 text-sm text-neutral-700 leading-relaxed"
+                >
+                  <span className="mt-1.5">
+                    <BulletDot />
+                  </span>
+                  <span>{t}</span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-sm text-neutral-700 leading-relaxed">—</p>
+          )}
+        </div>
+      )}
+    </div>
+  );
+
+  const ImgCol = image ? (
+    <div className="rounded-3xl overflow-hidden bg-neutral-100 border border-neutral-200 shadow-sm">
+      <img src={image} alt={alt} className="w-full h-full object-cover" />
+    </div>
+  ) : null;
+
+  const isLeft = imageSide === "left";
+
+  return (
+    <motion.section
+      ref={ref}
+      initial={{ opacity: 0, y: 18 }}
+      animate={isInView ? { opacity: 1, y: 0 } : undefined}
+      transition={{ duration: 0.7, ease: "easeOut" }}
+      className="w-full"
+    >
+      {!ImgCol ? (
+        <div className="bg-white rounded-3xl border border-neutral-200 shadow-sm p-8 md:p-10">
+          {TextCol}
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div
+            className={`lg:col-span-6 ${isLeft ? "order-2 lg:order-2" : "order-2 lg:order-1"}`}
+          >
+            <div className="bg-white rounded-3xl border border-neutral-200 shadow-sm p-8 md:p-10">
+              {TextCol}
+            </div>
+          </div>
+
+          <div
+            className={`lg:col-span-6 ${isLeft ? "order-1 lg:order-1" : "order-1 lg:order-2"}`}
+          >
+            {ImgCol}
+          </div>
+        </div>
+      )}
+    </motion.section>
+  );
+}
+
+/** Modal (panel IO sẽ tự ẩn nếu không có data) */
 function ExpandedImageModal({
   image,
   caption,
   onClose,
   panelTitle = "Enhanced View",
   keyFeatures = [],
-  ioItem, // ✅ object: { input, system, output }
+  ioItem,
   expandedIndex = 0,
 }) {
   useEffect(() => {
@@ -332,14 +675,14 @@ function ExpandedImageModal({
     };
   }, []);
 
-  const systemList = useMemo(() => {
-    if (!ioItem?.system) return [];
-    if (Array.isArray(ioItem.system)) return ioItem.system;
-    return String(ioItem.system)
-      .split("\n")
-      .map((x) => x.trim())
-      .filter(Boolean);
-  }, [ioItem]);
+  const systemList = useMemo(() => toLines(ioItem?.system), [ioItem]);
+
+  const hasIO =
+    hasAnyText(ioItem?.input) ||
+    hasAnyText(systemList) ||
+    hasAnyText(ioItem?.output);
+
+  const showPanel = hasIO || (keyFeatures?.length ?? 0) > 0;
 
   const Bullet = () => (
     <span className="inline-flex h-2.5 w-2.5 rounded-full bg-blue-500 shadow-[0_0_0_4px_rgba(59,130,246,0.12)]" />
@@ -354,7 +697,6 @@ function ExpandedImageModal({
       className="fixed inset-0 z-50 flex items-center justify-center"
       onClick={onClose}
     >
-      {/* overlay */}
       <motion.div
         initial={{ backdropFilter: "blur(0px)" }}
         animate={{ backdropFilter: "blur(18px)" }}
@@ -363,13 +705,14 @@ function ExpandedImageModal({
       />
 
       <div
-        className="relative max-w-7xl w-full mx-auto px-10"
+        className="relative max-w-7xl w-full mx-auto px-6 md:px-10"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="grid grid-cols-12 gap-12 items-center">
-          {/* Image */}
+        <div
+          className={`grid ${showPanel ? "grid-cols-12 gap-10" : "grid-cols-1"} items-center`}
+        >
           <motion.div
-            className="col-span-8"
+            className={showPanel ? "col-span-12 lg:col-span-8" : "col-span-1"}
             initial={{ scale: 0.92, opacity: 0, y: 24 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.92, opacity: 0, y: 24 }}
@@ -411,94 +754,101 @@ function ExpandedImageModal({
             </div>
           </motion.div>
 
-          {/* Panel */}
-          <motion.div
-            className="col-span-4"
-            initial={{ opacity: 0, x: 60 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 60 }}
-            transition={{ duration: 0.5, delay: 0.05 }}
-          >
-            <div className="bg-white rounded-3xl shadow-2xl p-8">
-              <h2 className="text-2xl font-bold text-neutral-900 mb-8">
-                {panelTitle}
-              </h2>
+          {showPanel ? (
+            <motion.div
+              className="col-span-12 lg:col-span-4"
+              initial={{ opacity: 0, x: 60 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 60 }}
+              transition={{ duration: 0.5, delay: 0.05 }}
+            >
+              <div className="bg-white rounded-3xl shadow-2xl p-8">
+                <h2 className="text-2xl font-bold text-neutral-900 mb-8">
+                  {panelTitle}
+                </h2>
 
-              <div className="space-y-8">
-                {/* INPUT */}
-                <div>
-                  <div className="text-xs font-bold tracking-wider text-neutral-500 mb-2">
-                    INPUT
-                  </div>
-                  <p className="text-sm text-neutral-700 leading-relaxed">
-                    {ioItem?.input || "—"}
-                  </p>
+                <div className="space-y-8">
+                  {hasIO ? (
+                    <>
+                      <div>
+                        <div className="text-xs font-bold tracking-wider text-neutral-500 mb-2">
+                          INPUT
+                        </div>
+                        <p className="text-sm text-neutral-700 leading-relaxed">
+                          {ioItem?.input || "—"}
+                        </p>
+                      </div>
+
+                      <div className="h-px bg-neutral-100" />
+
+                      <div>
+                        <div className="text-xs font-bold tracking-wider text-neutral-500 mb-3">
+                          SYSTEM
+                        </div>
+
+                        {systemList.length ? (
+                          <ul className="space-y-3">
+                            {systemList.map((t, i) => (
+                              <li
+                                key={i}
+                                className="flex gap-3 text-sm text-neutral-700 leading-relaxed"
+                              >
+                                <span className="mt-1.5">
+                                  <Bullet />
+                                </span>
+                                <span>{t}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <p className="text-sm text-neutral-700 leading-relaxed">
+                            —
+                          </p>
+                        )}
+                      </div>
+
+                      <div className="h-px bg-neutral-100" />
+
+                      <div>
+                        <div className="text-xs font-bold tracking-wider text-neutral-500 mb-2">
+                          OUTPUT
+                        </div>
+                        <p className="text-sm text-neutral-700 leading-relaxed whitespace-pre-line">
+                          {ioItem?.output || "—"}
+                        </p>
+                      </div>
+                    </>
+                  ) : null}
+
+                  {keyFeatures?.length ? (
+                    <div className="bg-neutral-50 rounded-xl p-4 border border-neutral-200">
+                      <p className="text-sm font-semibold text-neutral-700 mb-2">
+                        Key Features:
+                      </p>
+                      <ul className="text-sm text-neutral-600 space-y-1">
+                        {keyFeatures.map((x, i) => (
+                          <li key={i}>• {x}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
                 </div>
-
-                <div className="h-px bg-neutral-100" />
-
-                {/* SYSTEM */}
-                <div>
-                  <div className="text-xs font-bold tracking-wider text-neutral-500 mb-3">
-                    SYSTEM
-                  </div>
-
-                  {systemList.length ? (
-                    <ul className="space-y-3">
-                      {systemList.map((t, i) => (
-                        <li
-                          key={i}
-                          className="flex gap-3 text-sm text-neutral-700 leading-relaxed"
-                        >
-                          <span className="mt-1.5">
-                            <Bullet />
-                          </span>
-                          <span>{t}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p className="text-sm text-neutral-700 leading-relaxed">
-                      —
-                    </p>
-                  )}
-                </div>
-
-                <div className="h-px bg-neutral-100" />
-
-                {/* OUTPUT */}
-                <div>
-                  <div className="text-xs font-bold tracking-wider text-neutral-500 mb-2">
-                    OUTPUT
-                  </div>
-                  <p className="text-sm text-neutral-700 leading-relaxed whitespace-pre-line">
-                    {ioItem?.output || "—"}
-                  </p>
-                </div>
-
-                {/* Key features */}
-                {keyFeatures?.length ? (
-                  <div className="bg-neutral-50 rounded-xl p-4 border border-neutral-200">
-                    <p className="text-sm font-semibold text-neutral-700 mb-2">
-                      Key Features:
-                    </p>
-                    <ul className="text-sm text-neutral-600 space-y-1">
-                      {keyFeatures.map((x, i) => (
-                        <li key={i}>• {x}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : null}
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          ) : null}
         </div>
       </div>
     </motion.div>
   );
 }
 
-/** MAIN TEMPLATE */
+/**
+ * MAIN TEMPLATE
+ *
+ * ✅ preMetricsBlocks
+ * - [{ type: "image", title?, subtitle?, image, alt? }]
+ * - [{ type: "split", title?, mode: "io"|"solution", image?, imageSide?, input?, system?, output?, bullets? }]
+ */
 export default function PortfolioCaseTemplate({
   title,
   subtitle,
@@ -513,17 +863,54 @@ export default function PortfolioCaseTemplate({
   metricsTop = [],
   metricsBottom = [],
   keyFeatures = [],
-  io = [], // ✅ NEW: [{input, system, output}, {input, system, output}]
+  io = [],
+  preMetricsBlocks = [],
 }) {
   const [expandedImage, setExpandedImage] = useState(null);
+
+  // Lenis smooth scroll
+  const lenisRef = useRef(null);
+  const rafIdRef = useRef(null);
+
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.05,
+      lerp: 0.08,
+      smoothWheel: true,
+      smoothTouch: false,
+    });
+
+    lenisRef.current = lenis;
+
+    const raf = (time) => {
+      lenis.raf(time);
+      rafIdRef.current = requestAnimationFrame(raf);
+    };
+    rafIdRef.current = requestAnimationFrame(raf);
+
+    return () => {
+      if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
+      rafIdRef.current = null;
+
+      if (typeof lenis.destroy === "function") lenis.destroy();
+      lenisRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    const lenis = lenisRef.current;
+    if (!lenis) return;
+    if (expandedImage) lenis.stop();
+    else lenis.start();
+  }, [expandedImage]);
 
   const captionSafe = useMemo(() => {
     if (!captions?.length) return ["", ""];
     return [captions[0] || "", captions[1] || ""];
   }, [captions]);
 
+  // chỉ dùng 2 ảnh => chỉ cần io[0], io[1]
   const ioSafe = useMemo(() => {
-    // đảm bảo luôn có 2 item (0/1) để tránh undefined
     const empty = { input: "", system: [], output: "" };
     return [io?.[0] || empty, io?.[1] || empty];
   }, [io]);
@@ -533,7 +920,7 @@ export default function PortfolioCaseTemplate({
 
   return (
     <LayoutGroup>
-      <div className="min-h-screen bg-neutral-50">
+      <div className="min-h-screen bg-neutral-50 overflow-x-hidden">
         <div className="max-w-[1440px] mx-auto px-6 md:px-16 py-14 md:py-20">
           {/* Hero */}
           <div className="grid grid-cols-12 gap-12 mb-20 md:mb-24">
@@ -559,15 +946,59 @@ export default function PortfolioCaseTemplate({
             </div>
           </div>
 
-          {/* Metrics */}
+          {/* Blocks before Metrics */}
+          {preMetricsBlocks?.length ? (
+            <div className="space-y-16 md:space-y-24 mb-20 md:mb-24">
+              {preMetricsBlocks.map((b, idx) => {
+                if (b?.type === "image") {
+                  return (
+                    <PreMetricsImageBlock
+                      key={`pre-img-${idx}`}
+                      title={b.title}
+                      subtitle={b.subtitle}
+                      image={b.image}
+                      alt={b.alt}
+                    />
+                  );
+                }
+
+                return (
+                  <PreMetricsSplitBlock
+                    key={`pre-split-${idx}`}
+                    title={b.title}
+                    mode={b.mode || "io"}
+                    image={b.image}
+                    alt={b.alt}
+                    imageSide={b.imageSide || "right"}
+                    input={b.input}
+                    system={b.system}
+                    output={b.output}
+                    bullets={b.bullets || []}
+                  />
+                );
+              })}
+            </div>
+          ) : null}
+
+          {/* ✅ UPDATED Metrics Grid:
+              - Top: if length===3 -> lg:grid-cols-3 else lg:grid-cols-4
+              - MetricCard supports icons + showTrend toggle
+           */}
           <div className="bg-gradient-to-br from-blue-500 via-blue-600 to-teal-500 rounded-3xl shadow-2xl p-8 md:p-12">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-5">
+            <div
+              className={[
+                "grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5",
+                metricsTop.length === 3 ? "lg:grid-cols-3" : "lg:grid-cols-4",
+              ].join(" ")}
+            >
               {metricsTop.map((m, i) => (
                 <MetricCard
                   key={`${m.label}-${i}`}
                   value={m.value}
                   label={m.label}
                   description={m.description}
+                  icons={m.icons}
+                  showTrend={m.showTrend ?? false}
                   delay={i * 80}
                   span={1}
                 />
@@ -581,6 +1012,7 @@ export default function PortfolioCaseTemplate({
                   value={m.value}
                   label={m.label}
                   description={m.description}
+                  showTrend={m.showTrend ?? false}
                   delay={(metricsTop.length + i) * 80}
                   span={2}
                 />
@@ -589,6 +1021,7 @@ export default function PortfolioCaseTemplate({
           </div>
         </div>
 
+        {/* Modal */}
         <AnimatePresence>
           {expandedImage ? (
             <ExpandedImageModal

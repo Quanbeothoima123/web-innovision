@@ -3,8 +3,6 @@
 import { useEffect, useState, useRef } from "react";
 import Lenis from "@studio-freight/lenis";
 import { motion } from "framer-motion";
-import Header from "./Header";
-import { Footer } from "./Footer";
 
 export default function Homepage() {
   // --- STATES & REFS ---
@@ -203,7 +201,6 @@ export default function Homepage() {
   return (
     <div className="bg-white min-h-screen w-full overflow-x-hidden font-['Montserrat']">
       {/* 1. HEADER */}
-      <Header isScrolled={isScrolled} />
 
       {/* 2. HERO SECTION */}
       <div className="relative h-screen w-full flex items-center justify-center overflow-hidden">
@@ -475,7 +472,6 @@ export default function Homepage() {
           </div>
         </div>
       </section>
-      <Footer />
     </div>
   );
 }

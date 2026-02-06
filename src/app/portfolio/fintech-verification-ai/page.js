@@ -20,8 +20,8 @@ export default function Page() {
         "Flags anomalies for human review, reducing workload significantly",
       ]}
       // 2 ảnh cho hero (stack)
-      primaryImage="/demo/fintech/primary.png"
-      secondaryImage="/demo/fintech/secondary.png"
+      primaryImage="/portfolio/fintech-verification-ai/primary.png"
+      secondaryImage="/portfolio/fintech-verification-ai/secondary.png"
       mockImage={undefined}
       captions={[
         "Fintech transaction verification — unified view from logs + receipts",
@@ -66,7 +66,7 @@ export default function Page() {
           type: "split",
           mode: "io",
           title: "",
-          image: "/demo/fintech/io.png",
+          image: "/portfolio/fintech-verification-ai/evidence_flow.png",
           imageSide: "right",
           input: "Transaction log (text) + payment screenshot (image)",
           system: [
@@ -82,7 +82,7 @@ export default function Page() {
           type: "image",
           title: "Fintech Transaction Verification Assistant",
           subtitle: "",
-          image: "/demo/fintech/diagram.png",
+          image: "/portfolio/fintech-verification-ai/diagram.png",
           alt: "Fintech verification flow diagram",
         },
       ]}

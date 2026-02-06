@@ -651,7 +651,7 @@ function PreMetricsSplitBlock({
   );
 }
 
-/** Modal (panel IO sẽ tự ẩn nếu không có data) */
+/** Modal - ✅ FIXED: CSS để panel không bị cao quá */
 function ExpandedImageModal({
   image,
   caption,
@@ -694,22 +694,28 @@ function ExpandedImageModal({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.32 }}
-      className="fixed inset-0 z-50 flex items-center justify-center"
+      className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto"
       onClick={onClose}
+      style={{
+        scrollbarWidth: "thin",
+        scrollbarColor: "rgba(255,255,255,0.3) transparent",
+      }}
     >
       <motion.div
         initial={{ backdropFilter: "blur(0px)" }}
         animate={{ backdropFilter: "blur(18px)" }}
         exit={{ backdropFilter: "blur(0px)" }}
-        className="absolute inset-0 bg-black/70"
+        className="absolute inset-0 bg-black/70 pointer-events-none"
       />
 
+      {/* ✅ FIX: Bỏ overflow-y-auto ở đây vì đã có ở parent */}
       <div
-        className="relative max-w-7xl w-full mx-auto px-6 md:px-10"
+        className="relative max-w-7xl w-full mx-auto px-6 md:px-10 py-10"
         onClick={(e) => e.stopPropagation()}
       >
+        {/* ✅ FIX 2: items-center → items-start */}
         <div
-          className={`grid ${showPanel ? "grid-cols-12 gap-10" : "grid-cols-1"} items-center`}
+          className={`grid ${showPanel ? "grid-cols-12 gap-10" : "grid-cols-1"} items-start`}
         >
           <motion.div
             className={showPanel ? "col-span-12 lg:col-span-8" : "col-span-1"}
@@ -724,15 +730,17 @@ function ExpandedImageModal({
             }}
           >
             <div className="relative">
+              {/* ✅ FIX: Dấu X nằm ở góc ảnh (top-3 right-3) thay vì -top-14 */}
               <button
                 onClick={onClose}
-                className="absolute -top-14 right-0 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all hover:scale-110"
+                className="absolute top-3 right-3 z-50 p-3 rounded-full bg-black/40 hover:bg-black/60 text-white transition-all hover:scale-110 backdrop-blur-sm"
                 aria-label="Close"
               >
                 <IconX className="h-6 w-6" />
               </button>
 
-              <div className="rounded-3xl overflow-hidden shadow-2xl bg-black/20">
+              <div className="rounded-3xl overflow-hidden shadow-2xl">
+                {/* ✅ FIX 3: Bỏ bg-black/20 và dùng object-cover như cũ */}
                 <motion.img
                   src={image}
                   alt={caption}
@@ -762,8 +770,16 @@ function ExpandedImageModal({
               exit={{ opacity: 0, x: 60 }}
               transition={{ duration: 0.5, delay: 0.05 }}
             >
-              <div className="bg-white rounded-3xl shadow-2xl p-8">
-                <h2 className="text-2xl font-bold text-neutral-900 mb-8">
+              {/* ✅ FIX 4: Thêm max-h-[75vh] overflow-y-auto + custom scrollbar */}
+              <div
+                className="bg-white rounded-3xl shadow-2xl p-8 max-h-[75vh] overflow-y-auto"
+                style={{
+                  scrollbarWidth: "thin",
+                  scrollbarColor: "rgba(0,0,0,0.2) rgba(0,0,0,0.05)",
+                }}
+              >
+                {/* ✅ FIX 5: Title sticky top-0 */}
+                <h2 className="text-2xl font-bold text-neutral-900 mb-8 sticky top-0 bg-white z-10 pb-2">
                   {panelTitle}
                 </h2>
 

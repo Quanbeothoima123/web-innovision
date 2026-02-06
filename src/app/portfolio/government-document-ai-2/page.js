@@ -19,8 +19,8 @@ export default function Page() {
         "Evidence-linked answers: return record ID, references, and related documents in one view.",
       ]}
       // ✅ Hero: 2 ảnh
-      primaryImage="/demo/archive/primary.jpg"
-      secondaryImage="/demo/archive/secondary.jpg"
+      primaryImage="/portfolio/government-document-ai-2/primary.png"
+      secondaryImage="/portfolio/government-document-ai-2/secondary.png"
       mockImage={undefined}
       captions={[
         "Digitizing & indexing government archive documents for instant retrieval",
@@ -63,7 +63,7 @@ export default function Page() {
           type: "split",
           mode: "io",
           title: "",
-          image: "/demo/archive/io.png", // ảnh minh hoạ flow (như screenshot bạn gửi)
+          image: "/portfolio/government-document-ai-2/process_flow.png", // ảnh minh hoạ flow (như screenshot bạn gửi)
           imageSide: "right",
           input: "Citizen submits a scanned tax form or contract PDF",
           system: [

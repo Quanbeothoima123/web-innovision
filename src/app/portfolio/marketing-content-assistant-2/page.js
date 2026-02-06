@@ -18,8 +18,8 @@ export default function Page() {
         "Automatically generates property listings, promotional copy, and social media posts.",
         "Ensures consistent tone and style across channels while supporting multilingual output.",
       ]}
-      primaryImage="/demo/marketing/primary.png"
-      secondaryImage="/demo/marketing/secondary.png"
+      primaryImage="/portfolio/marketing-content-assistant-2/primary.png"
+      secondaryImage="/portfolio/marketing-content-assistant-2/secondary.png"
       captions={[
         "Marketing content automation with brand consistency",
         "Social post generation with multilingual output",
@@ -59,7 +59,7 @@ export default function Page() {
         {
           type: "split",
           mode: "io-simple",
-          image: "/demo/marketing/io.png",
+          image: "/portfolio/marketing-content-assistant-2/flow_diagram.png",
           imageSide: "right",
           input:
             "“Generate a social post for a 2-bedroom apartment near Cau Giay, highlighting lake view and special promotion.”",

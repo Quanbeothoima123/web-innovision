@@ -1,7 +1,7 @@
 import PortfolioCaseTemplate from "@/components/portfolio/PortfolioCaseTemplate";
 
 export const metadata = {
-  title: "High Concurrency Platform",
+  title: "High-traffic Web Platform",
   description:
     "Enterprise-grade platform built to handle 50,000+ concurrent users with <200ms response time and 99.9% uptime.",
   alternates: { canonical: "/portfolio/high-concurrency-platform/" },
@@ -10,7 +10,7 @@ export const metadata = {
 export default function Page() {
   return (
     <PortfolioCaseTemplate
-      title="High Concurrency Platform"
+      title="High-traffic Web Platform"
       subtitle="Enterprise-scale architecture to support 50,000+ concurrent users with low latency, high availability, and optimized cloud cost."
       problem="Enterprises struggle with large-scale concurrent users on their platforms. Traffic spikes cause degraded performance, unstable sessions, downtime risk, and increased operational cost without a scalable architecture."
       solution={[
@@ -19,8 +19,8 @@ export default function Page() {
         "Auto-scaling on AWS/GCP with observability and cost controls for efficiency.",
       ]}
       /** ✅ Hero: cần 2 ảnh như template hiện tại của bạn */
-      primaryImage="/demo/concurrency/primary.jpg"
-      secondaryImage="/demo/concurrency/secondary.jpg"
+      primaryImage="/portfolio/high_traffic_web_platform/primary.png"
+      secondaryImage="/portfolio/high_traffic_web_platform/secondary.png"
       mockImage={undefined}
       captions={[
         "Architecture designed for high concurrency & high availability",
@@ -66,7 +66,8 @@ export default function Page() {
           type: "split",
           mode: "solution",
           title: "Architecture Overview",
-          image: "/demo/concurrency/overview.png",
+          image:
+            "/portfolio/high_traffic_web_platform/architecture_overview.png",
           imageSide: "right",
           bullets: [
             "React SPA/SSR-ready frontend for fast UX",

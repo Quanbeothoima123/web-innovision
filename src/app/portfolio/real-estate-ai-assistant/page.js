@@ -14,9 +14,9 @@ export default function Page() {
       subtitle="LLM + RAG combined with Document AI to automatically verify and classify financial transactions"
       problem="Real estate firms face fragmented, siloed project data."
       solution="LLM assistant to unify internal reports, contracts, and property listings into one searchable knowledge base."
-      primaryImage="/demo/primary.jpg"
-      secondaryImage="/demo/secondary.jpg"
-      mockImage="/demo/preview.png"
+      primaryImage="/portfolio/real_estate_ai_assistant/primary.jpg"
+      secondaryImage="/portfolio/real_estate_ai_assistant/secondary.jpg"
+      mockImage="/portfolio/real_estate_ai_assistant/preview.png"
       captions={[
         "Professional construction team delivering excellence in property development",
         "Modern architectural design showcasing innovative building solutions",

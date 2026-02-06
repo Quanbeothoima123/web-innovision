@@ -134,7 +134,7 @@ function PortfolioHero({ scrollY }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="mt-6 text-[16px] md:text-[18px] text-white font-medium max-w-2xl"
+          className="mt-6 text-[16px] md:text-[18px] text-[#000000] font-medium max-w-2xl"
         >
           See how INNOVISION delivers AI-driven solutions across industries
         </motion.p>
@@ -143,7 +143,7 @@ function PortfolioHero({ scrollY }) {
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-          className="mt-3 text-[14px] md:text-[16px] text-white/90 max-w-3xl leading-relaxed"
+          className="mt-3 text-[14px] md:text-[16px] text-[#000000]/90 max-w-3xl leading-relaxed"
         >
           We build fast, scalable AI solutions, from LLM platforms to Edge and
           embedded systems, that help teams ship smarter and innovate faster.

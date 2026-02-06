@@ -9,16 +9,10 @@ import Link from "next/link";
 /**
  * FILE: src/app/portfolio/page.js
  *
- * Done:
- * 1) Hero OUR PROJECTS giống AboutUs: ảnh nền + parallax + gradient top/bottom
- * 2) Fix vertical tab không bị lẹm: kẹp top/bottom + scroll nội bộ + no-scrollbar
- * 3) Vertical tab CHỈ hiện khi:
- *    - đã scroll qua gần hết Hero (h-screen)
- *    - và tab ngang (horizontal) KHÔNG đang hiển thị
- *
- * NOTE:
- * - Đặt banner ảnh tại /public/banner-projects.jpg (hoặc đổi path trong PortfolioHero)
- * - Bạn đã có .no-scrollbar và .pill-vertical-text trong globals.css (OK)
+ * Updates:
+ * 1) Layout: 2 items trên (row 1), 3 items dưới (row 2)
+ * 2) Gradient: Xanh nước biển + Trắng
+ * 3) Không dùng large/featured layout phức tạp
  */
 
 /* =======================
@@ -41,12 +35,21 @@ const ALL_PROJECTS = [
     tags: ["LLM", "RAG", "Real Estate"],
     category: "AI Products",
     image: "/portfolio/banner/real_estate_AI_assistant.png",
-    featured: true,
-    large: true,
     route: "/portfolio/real-estate-ai-assistant",
   },
   {
     id: "2",
+    title: "High-traffic Web Platform",
+    metric: "<300ms latency",
+    summary:
+      "Scalable web infrastructure handling 1,000+ concurrent users with real-time data synchronization.",
+    tags: ["WebSockets", "Cloud", "Scale"],
+    category: "Software & Firmware Development",
+    image: "/portfolio/banner/high_traffic_web_platform.png",
+    route: "/portfolio/high-traffic-web-platform",
+  },
+  {
+    id: "3",
     title: "Fintech Verification AI",
     metric: "95%+ accuracy",
     summary:
@@ -57,7 +60,7 @@ const ALL_PROJECTS = [
     route: "/portfolio/fintech-verification-ai",
   },
   {
-    id: "3",
+    id: "4",
     title: "Government Document AI",
     metric: "60% faster processing",
     summary:
@@ -68,7 +71,7 @@ const ALL_PROJECTS = [
     route: "/portfolio/government-document-ai-2",
   },
   {
-    id: "4",
+    id: "5",
     title: "Marketing Content Assistant",
     metric: "3x content output",
     summary:
@@ -78,22 +81,10 @@ const ALL_PROJECTS = [
     image: "/portfolio/banner/marketing_content_assistant.png",
     route: "/portfolio/marketing-content-assistant-2",
   },
-  {
-    id: "5",
-    title: "High-traffic Web Platform",
-    metric: "<300ms latency",
-    summary:
-      "Scalable web infrastructure handling 1,000+ concurrent users with real-time data synchronization.",
-    tags: ["WebSockets", "Cloud", "Scale"],
-    category: "Software & Firmware Development",
-    image: "/portfolio/banner/high_traffic_web_platform.png",
-    featured: true,
-    route: "/portfolio/high-traffic-web-platform",
-  },
 ];
 
 /* =======================
-   HERO (AboutUs-like)
+   HERO
 ======================= */
 function PortfolioHero({ scrollY }) {
   return (
@@ -110,7 +101,7 @@ function PortfolioHero({ scrollY }) {
       {/* Overlay tối nhẹ */}
       <div className="absolute inset-0 z-[0] bg-black/1" />
 
-      {/* Gradient trắng trên/dưới giống AboutUs */}
+      {/* Gradient trắng trên/dưới */}
       <div className="absolute top-0 left-0 w-full h-1/5 bg-gradient-to-b from-white via-white/40 to-transparent z-[1]" />
       <div className="absolute bottom-0 left-0 w-full h-1/5 bg-gradient-to-t from-white via-white/40 to-transparent z-[1]" />
 
@@ -151,17 +142,7 @@ function PortfolioHero({ scrollY }) {
 /* =======================
    CARDS
 ======================= */
-function BentoProjectCard({
-  title,
-  metric,
-  summary,
-  tags,
-  image,
-  featured = false,
-  large = false,
-  index,
-  route,
-}) {
+function ProjectCard({ title, metric, summary, tags, image, index, route }) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -176,51 +157,32 @@ function BentoProjectCard({
       }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      className={`relative group ${large ? "lg:col-span-2 lg:row-span-2" : ""}`}
+      className="relative group h-full"
     >
-      {/* Animated Gradient Border for Featured */}
-      {featured && (
-        <motion.div
-          className="absolute -inset-[2px] rounded-3xl opacity-75"
-          style={{
-            background:
-              "linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899, #3b82f6)",
-            backgroundSize: "200% 200%",
-          }}
-          animate={{
-            backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-        />
-      )}
-
-      {/* Glass Card */}
+      {/* Glass Card - Gradient xanh nước biển + trắng */}
       <motion.div
-        className={`relative h-full bg-white/70 backdrop-blur-xl rounded-3xl border ${
-          featured ? "border-transparent" : "border-white/80"
-        } shadow-lg overflow-hidden`}
+        className="relative h-full rounded-3xl border border-white/80 shadow-lg overflow-hidden"
+        style={{
+          background:
+            "linear-gradient(135deg, rgba(224, 247, 250, 0.7) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(240, 253, 255, 0.7) 100%)",
+          backdropFilter: "blur(12px)",
+        }}
         whileHover={{
           y: -8,
-          boxShadow: "0 24px 48px rgba(99, 102, 241, 0.2)",
+          boxShadow: "0 24px 48px rgba(6, 182, 212, 0.15)",
         }}
         transition={{ duration: 0.2 }}
       >
-        {/* Hover Glow */}
+        {/* Hover Glow - Cyan/Teal */}
         <motion.div
-          className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10"
+          className="absolute inset-0 bg-gradient-to-br from-cyan-50/40 via-teal-50/30 to-blue-50/40"
           animate={{ opacity: isHovered ? 1 : 0 }}
           transition={{ duration: 0.2 }}
         />
 
         {/* Image */}
         {image && (
-          <div
-            className={`relative ${large ? "h-72" : "h-48"} overflow-hidden`}
-          >
+          <div className="relative h-48 overflow-hidden">
             <motion.img
               src={image}
               alt={title}
@@ -228,37 +190,27 @@ function BentoProjectCard({
               animate={{ scale: isHovered ? 1.05 : 1 }}
               transition={{ duration: 0.3 }}
             />
-            <div className="absolute inset-0 bg-gradient-to-t to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
           </div>
         )}
 
         {/* Content */}
-        <div className={`relative p-6 ${large ? "p-8" : ""}`}>
-          {/* Metric Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 mb-4">
-            <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
-            <span className="text-sm font-semibold text-green-700">
+        <div className="relative p-5">
+          {/* Metric Badge - Cyan/Teal */}
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-cyan-500/20 to-teal-500/20 border border-cyan-500/30 mb-3">
+            <div className="w-1.5 h-1.5 rounded-full bg-cyan-500" />
+            <span className="text-sm font-semibold text-cyan-700">
               {metric}
             </span>
           </div>
 
-          <h3
-            className={`font-bold text-neutral-900 mb-3 ${
-              large ? "text-3xl" : "text-xl"
-            }`}
-          >
-            {title}
-          </h3>
+          <h3 className="font-bold text-neutral-900 mb-2 text-xl">{title}</h3>
 
-          <p
-            className={`text-neutral-600 leading-relaxed mb-4 ${
-              large ? "text-base" : "text-sm"
-            }`}
-          >
+          <p className="text-neutral-600 leading-relaxed mb-3 text-sm line-clamp-3">
             {summary}
           </p>
 
-          <div className="flex flex-wrap gap-2 mb-4">
+          <div className="flex flex-wrap gap-2 mb-3">
             {tags.map((tag) => (
               <span
                 key={tag}
@@ -271,7 +223,7 @@ function BentoProjectCard({
 
           <Link href={route}>
             <motion.button
-              className="inline-flex items-center gap-2 text-blue-600 font-semibold text-sm group/cta"
+              className="inline-flex items-center gap-2 text-cyan-600 font-semibold text-sm group/cta"
               whileHover={{ x: 4 }}
               type="button"
             >
@@ -290,7 +242,7 @@ function BentoProjectCard({
   );
 }
 
-function PlaceholderCard({ index, large = false }) {
+function PlaceholderCard({ index }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 40 }}
@@ -301,12 +253,19 @@ function PlaceholderCard({ index, large = false }) {
         delay: index * 0.08,
         ease: [0.16, 1, 0.3, 1],
       }}
-      className={`relative ${large ? "lg:col-span-2 lg:row-span-2" : ""}`}
+      className="relative h-full"
     >
-      <div className="h-full bg-white/40 backdrop-blur-xl rounded-3xl border border-dashed border-white/80 shadow-sm overflow-hidden">
+      <div
+        className="h-full rounded-3xl border border-dashed border-cyan-200/80 shadow-sm overflow-hidden"
+        style={{
+          background:
+            "linear-gradient(135deg, rgba(224, 247, 250, 0.4) 0%, rgba(255, 255, 255, 0.6) 50%, rgba(240, 253, 255, 0.4) 100%)",
+          backdropFilter: "blur(12px)",
+        }}
+      >
         <div className="h-full flex flex-col items-center justify-center p-12 text-center">
-          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center mb-4">
-            <Sparkles className="w-8 h-8 text-blue-600/50" strokeWidth={1.5} />
+          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-cyan-100 to-teal-100 flex items-center justify-center mb-4">
+            <Sparkles className="w-8 h-8 text-cyan-600/50" strokeWidth={1.5} />
           </div>
           <h4 className="text-lg font-semibold text-neutral-400 mb-2">
             Coming Soon
@@ -318,6 +277,7 @@ function PlaceholderCard({ index, large = false }) {
   );
 }
 
+/* Layout: 2 items top row, 3 items bottom row */
 function BentoGrid({ projects, activeTab }) {
   const filteredProjects =
     activeTab === "All Project"
@@ -334,30 +294,67 @@ function BentoGrid({ projects, activeTab }) {
             animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
             exit={{ opacity: 0, x: 12, filter: "blur(4px)" }}
             transition={{ duration: 0.28, ease: [0.25, 0.1, 0.25, 1] }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr"
+            className="space-y-6"
           >
             {filteredProjects.length > 0 ? (
-              filteredProjects.map((project, index) => (
-                <BentoProjectCard
-                  key={project.id}
-                  title={project.title}
-                  metric={project.metric}
-                  summary={project.summary}
-                  tags={project.tags}
-                  image={project.image}
-                  featured={project.featured}
-                  large={project.large}
-                  index={index}
-                  route={project.route}
-                />
-              ))
+              <>
+                {/* Row 1: 2 items */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {filteredProjects.slice(0, 2).map((project, index) => (
+                    <ProjectCard
+                      key={project.id}
+                      title={project.title}
+                      metric={project.metric}
+                      summary={project.summary}
+                      tags={project.tags}
+                      image={project.image}
+                      index={index}
+                      route={project.route}
+                    />
+                  ))}
+                </div>
+
+                {/* Row 2: 3 items */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {filteredProjects.slice(2, 5).map((project, index) => (
+                    <ProjectCard
+                      key={project.id}
+                      title={project.title}
+                      metric={project.metric}
+                      summary={project.summary}
+                      tags={project.tags}
+                      image={project.image}
+                      index={index + 2}
+                      route={project.route}
+                    />
+                  ))}
+
+                  {/* Fill remaining slots with placeholders if needed */}
+                  {filteredProjects.length === 3 && (
+                    <>
+                      <PlaceholderCard index={3} />
+                      <PlaceholderCard index={4} />
+                    </>
+                  )}
+                  {filteredProjects.length === 4 && (
+                    <PlaceholderCard index={4} />
+                  )}
+                </div>
+              </>
             ) : (
               <>
-                <PlaceholderCard index={0} large />
-                <PlaceholderCard index={1} />
-                <PlaceholderCard index={2} />
-                <PlaceholderCard index={3} />
-                <PlaceholderCard index={4} />
+                {/* Row 1: 2 placeholders */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <PlaceholderCard index={0} />
+                  <PlaceholderCard index={1} />
+                </div>
+
+                {/* Row 2: 3 placeholders */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <PlaceholderCard index={2} />
+                  <PlaceholderCard index={3} />
+                  <PlaceholderCard index={4} />
+                </div>
               </>
             )}
           </motion.div>
@@ -392,7 +389,7 @@ function SortToggle({ activeSort, onSortChange }) {
           {activeSort === label && (
             <motion.div
               layoutId="sort-indicator"
-              className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl"
+              className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-teal-600 rounded-xl"
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
             />
           )}
@@ -444,9 +441,7 @@ function CategoryNavigation({ tabs, activeTab, onTabChange, variant }) {
     }
   }, [activeTab, tabs, variant]);
 
-  /* -----------------------
-     VERTICAL
-  ----------------------- */
+  /* VERTICAL */
   if (variant === "vertical") {
     return (
       <AnimatePresence mode="wait">
@@ -522,14 +517,14 @@ function CategoryNavigation({ tabs, activeTab, onTabChange, variant }) {
                       "linear-gradient(135deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0.18) 100%)",
                     backdropFilter: "blur(8px)",
                     boxShadow:
-                      "inset 0 1px 1px 0 rgba(255, 255, 255, 0.5), 0 2px 8px -2px rgba(59, 130, 246, 0.3)",
+                      "inset 0 1px 1px 0 rgba(255, 255, 255, 0.5), 0 2px 8px -2px rgba(6, 182, 212, 0.3)",
                   }}
                 />
                 <div
                   className="absolute inset-0 rounded-[24px]"
                   style={{
                     background:
-                      "linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(59, 130, 246, 0.12) 50%, rgba(236, 72, 153, 0.15) 100%)",
+                      "linear-gradient(135deg, rgba(6, 182, 212, 0.15) 0%, rgba(20, 184, 166, 0.12) 50%, rgba(14, 165, 233, 0.15) 100%)",
                     opacity: 0.6,
                     filter: "blur(1px)",
                   }}
@@ -590,9 +585,7 @@ function CategoryNavigation({ tabs, activeTab, onTabChange, variant }) {
     );
   }
 
-  /* -----------------------
-     HORIZONTAL
-  ----------------------- */
+  /* HORIZONTAL */
   return (
     <AnimatePresence mode="wait">
       <motion.div
@@ -625,14 +618,14 @@ function CategoryNavigation({ tabs, activeTab, onTabChange, variant }) {
                   "linear-gradient(135deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0.18) 100%)",
                 backdropFilter: "blur(8px)",
                 boxShadow:
-                  "inset 0 1px 1px 0 rgba(255, 255, 255, 0.5), 0 2px 8px -2px rgba(59, 130, 246, 0.3)",
+                  "inset 0 1px 1px 0 rgba(255, 255, 255, 0.5), 0 2px 8px -2px rgba(6, 182, 212, 0.3)",
               }}
             />
             <div
               className="absolute inset-0 rounded-full"
               style={{
                 background:
-                  "linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(59, 130, 246, 0.12) 50%, rgba(236, 72, 153, 0.15) 100%)",
+                  "linear-gradient(135deg, rgba(6, 182, 212, 0.15) 0%, rgba(20, 184, 166, 0.12) 50%, rgba(14, 165, 233, 0.15) 100%)",
                 opacity: 0.6,
                 filter: "blur(1px)",
               }}
@@ -688,14 +681,12 @@ export default function PortfolioPage() {
   const [activeTab, setActiveTab] = useState("All Project");
   const [activeSort, setActiveSort] = useState("Featured");
   const [showHorizontalNav, setShowHorizontalNav] = useState(false);
-
-  // NEW: gate để không hiện tab dọc ở Hero
   const [allowVerticalNav, setAllowVerticalNav] = useState(false);
 
   const filterBarRef = useRef(null);
   const lastVisibilityRef = useRef(0);
 
-  // Lenis smooth scroll + sync scrollY
+  // Lenis smooth scroll
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
@@ -715,7 +706,6 @@ export default function PortfolioPage() {
       setScrollY(y);
       setIsScrolled(y > 50);
 
-      // chỉ hiện tab dọc khi qua gần hết hero
       const gate = window.innerHeight - 120;
       setAllowVerticalNav(y > gate);
     });
@@ -726,7 +716,7 @@ export default function PortfolioPage() {
     };
   }, []);
 
-  // Intersection Observer - hysteresis để tránh flicker
+  // Intersection Observer
   useEffect(() => {
     if (!filterBarRef.current) return;
 
@@ -758,9 +748,6 @@ export default function PortfolioPage() {
   const sortedProjects = useMemo(() => {
     const copy = [...ALL_PROJECTS];
     copy.sort((a, b) => {
-      if (activeSort === "Featured") {
-        return (b.featured ? 1 : 0) - (a.featured ? 1 : 0);
-      }
       if (activeSort === "Latest") {
         return b.id.localeCompare(a.id);
       }
@@ -774,7 +761,7 @@ export default function PortfolioPage() {
       {/* Hero */}
       <PortfolioHero scrollY={scrollY} />
 
-      {/* Desktop: Vertical Navigation (CHỈ hiện khi đã qua hero && tab ngang không thấy) */}
+      {/* Desktop: Vertical Navigation */}
       <div className="hidden lg:block">
         {allowVerticalNav && !showHorizontalNav && (
           <CategoryNavigation
@@ -819,7 +806,7 @@ export default function PortfolioPage() {
         </div>
       </div>
 
-      {/* Content Area with Filter Bar (Observed) */}
+      {/* Content Area with Filter Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         {/* Desktop filter row */}
         <div

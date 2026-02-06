@@ -143,17 +143,20 @@ const Solutions = () => {
                   ))}
                 </div>
 
-                <Link href={item.route}>
-                  <motion.button
-                    whileHover={{ x: 10 }}
-                    className="group flex items-center gap-3 px-8 py-4 bg-[#3c90fc] text-white font-bold shadow-xl shadow-blue-100 transition-all hover:bg-[#2a78e4]"
-                  >
-                    Read More
-                    <span className="transition-transform group-hover:translate-x-1">
-                      →
-                    </span>
-                  </motion.button>
-                </Link>
+                {/* Updated Button with margin-top and rounded corners */}
+                <div className="mt-8">
+                  <Link href={item.route}>
+                    <motion.button
+                      whileHover={{ x: 10 }}
+                      className="group flex items-center gap-3 px-8 py-4 bg-[#3c90fc] text-white font-bold rounded-xl shadow-xl shadow-blue-100 transition-all hover:bg-[#2a78e4]"
+                    >
+                      Read More
+                      <span className="transition-transform group-hover:translate-x-1">
+                        →
+                      </span>
+                    </motion.button>
+                  </Link>
+                </div>
               </motion.div>
 
               {/* PHẦN ẢNH TĨNH */}

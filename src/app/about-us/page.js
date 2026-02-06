@@ -13,22 +13,22 @@ const AboutUs = () => {
     {
       title: "Agility & Ownership",
       desc: "We move fast, take initiative, and own our results.",
-      img: "/we_work/wework1.jpg",
+      img: "/we_work/wework1.png",
     },
     {
       title: "Innovation with Purpose",
       desc: "Every project must bring practical value to clients and society.",
-      img: "/we_work/wework2.jpg",
+      img: "/we_work/wework2.png",
     },
     {
       title: "Openness & Collaboration",
       desc: "We welcome ideas, embrace partnerships, and thrive on teamwork.",
-      img: "/we_work/wework3.jpg",
+      img: "/we_work/wework3.png",
     },
     {
       title: "Integrity & Trust",
       desc: "We commit to transparency and long-term relationships.",
-      img: "/we_work/wework4.jpg",
+      img: "/we_work/wework4.png",
     },
   ];
 

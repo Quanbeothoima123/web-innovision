@@ -13,32 +13,32 @@ const AIProductsDetail = () => {
     {
       title: "Data Source",
       desc: "PDFs, SOPs, Contracts, Property Listings, Policies",
-      image: "/tech-card-1.png",
+      image: "/solutions/tech_card/tech-card-1.png",
     },
     {
       title: "OCR & Parsing",
       desc: "Extract text, detect layout & tables",
-      image: "/tech-card-2.png",
+      image: "/solutions/tech_card/tech-card-2.png",
     },
     {
       title: "Embedding & Indexing",
       desc: "Store vectors in a secure database (vector DB)",
-      image: "/tech-card-3.png",
+      image: "/solutions/tech_card/tech-card-3.png",
     },
     {
       title: "Retriever + RAG",
       desc: "Retrieve relevant chunks for queries",
-      image: "/tech-card-4.png",
+      image: "/solutions/tech_card/tech-card-4.png",
     },
     {
       title: "LLM (Domain-tuned)",
       desc: "Generate answers grounded in context",
-      image: "/tech-card-5.png",
+      image: "/solutions/tech_card/tech-card-5.png",
     },
     {
       title: "Outputs (UI / API)",
       desc: "PDFs, SOPs, Contracts, Property Listings, Policies",
-      image: "/tech-card-6.png",
+      image: "/solutions/tech_card/tech-card-6.png",
     },
   ];
 

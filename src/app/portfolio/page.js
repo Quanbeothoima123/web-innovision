@@ -40,8 +40,7 @@ const ALL_PROJECTS = [
       "LLM-powered platform helping property developers track apartments, manage inquiries, and generate reports with 1M+ documents indexed.",
     tags: ["LLM", "RAG", "Real Estate"],
     category: "AI Products",
-    image:
-      "https://images.unsplash.com/photo-1766455434433-f286f7290fb4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZWFsJTIwZXN0YXRlJTIwYnVpbGRpbmclMjBjaXR5c2NhcGV8ZW58MXx8fHwxNzcwMjIwMjk1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    image: "/portfolio/banner/real_estate_AI_assistant.png",
     featured: true,
     large: true,
     route: "/portfolio/real-estate-ai-assistant",
@@ -54,8 +53,7 @@ const ALL_PROJECTS = [
       "Automated identity verification system processing thousands of documents with advanced fraud detection.",
     tags: ["Computer Vision", "OCR", "Fintech"],
     category: "AI Products",
-    image:
-      "https://images.unsplash.com/photo-1639503547276-90230c4a4198?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmaW50ZWNoJTIwc2VjdXJpdHklMjB2ZXJpZmljYXRpb258ZW58MXx8fHwxNzcwMjIwMjk1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    image: "/portfolio/banner/fintech_verification_AI.png",
     route: "/portfolio/fintech-verification-ai",
   },
   {
@@ -66,8 +64,7 @@ const ALL_PROJECTS = [
       "Intelligent document processing for government agencies with multi-language support and compliance tracking.",
     tags: ["NLP", "Document AI", "Gov Tech"],
     category: "AI Products",
-    image:
-      "https://images.unsplash.com/photo-1604218118561-4bc4427d1e7e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxnb3Zlcm5tZW50JTIwZG9jdW1lbnRzJTIwb2ZmaWNpYWx8ZW58MXx8fHwxNzcwMjIwMjk1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    image: "/portfolio/banner/government_document_AI.png",
     route: "/portfolio/government-document-ai-2",
   },
   {
@@ -78,8 +75,7 @@ const ALL_PROJECTS = [
       "AI-powered content generation platform helping marketing teams create high-quality campaigns faster.",
     tags: ["GPT-4", "Content Gen", "Marketing"],
     category: "AI Products",
-    image:
-      "https://images.unsplash.com/photo-1726066012749-f81bf4422d4e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHxtYXJrZXRpbmclMjBjb250ZW50JTIwY3JlYXRpb258ZW58MXx8fHwxNzcwMjIwMjk2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    image: "/portfolio/banner/marketing_content_assistant.png",
     route: "/portfolio/marketing-content-assistant-2",
   },
   {
@@ -90,8 +86,7 @@ const ALL_PROJECTS = [
       "Scalable web infrastructure handling 1,000+ concurrent users with real-time data synchronization.",
     tags: ["WebSockets", "Cloud", "Scale"],
     category: "Software & Firmware Development",
-    image:
-      "https://images.unsplash.com/photo-1762330465633-2f517c1782a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWIlMjBwbGF0Zm9ybSUyMHRlY2hub2xvZ3l8ZW58MXx8fHwxNzcwMjIwMjk2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    image: "/portfolio/banner/high_traffic_web_platform.png",
     featured: true,
     route: "/portfolio/high-traffic-web-platform",
   },
@@ -233,7 +228,7 @@ function BentoProjectCard({
               animate={{ scale: isHovered ? 1.05 : 1 }}
               transition={{ duration: 0.3 }}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t to-transparent" />
           </div>
         )}
 

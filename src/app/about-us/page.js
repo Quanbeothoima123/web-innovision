@@ -90,7 +90,7 @@ const AboutUs = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="mt-6 text-[16px] md:text-[18px] text-[#fff] font-medium max-w-2xl"
+            className="mt-6 text-[16px] md:text-[18px] text-[#000000] font-medium max-w-2xl"
           >
             Engineering Intelligence for the Real World
           </motion.p>

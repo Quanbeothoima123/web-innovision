@@ -107,13 +107,13 @@ function PortfolioHero({ scrollY }) {
       <div
         className="absolute inset-0 z-0 bg-cover bg-center"
         style={{
-          backgroundImage: "url('/banner-projects.jpg')",
+          backgroundImage: "url('/banner-portfolio.png')",
           transform: `translateY(${scrollY * 0.4}px)`,
         }}
       />
 
       {/* Overlay tối nhẹ */}
-      <div className="absolute inset-0 z-[0] bg-black/25" />
+      <div className="absolute inset-0 z-[0] bg-black/1" />
 
       {/* Gradient trắng trên/dưới giống AboutUs */}
       <div className="absolute top-0 left-0 w-full h-1/5 bg-gradient-to-b from-white via-white/40 to-transparent z-[1]" />

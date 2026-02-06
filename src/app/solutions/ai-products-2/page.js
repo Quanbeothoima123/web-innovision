@@ -95,7 +95,7 @@ const AIProductsDetail = () => {
       <section className="relative h-[75vh] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="/banner-solutions1.jpg"
+            src="/solutions/banner/solution1.png"
             alt="AI Products Background"
             className="w-full h-full object-cover"
           />

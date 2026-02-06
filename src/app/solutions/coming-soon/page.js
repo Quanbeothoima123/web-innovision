@@ -27,8 +27,8 @@ const IndustrialAIDetail = () => {
       <section className="relative h-[75vh] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="/banner-solutions1.jpg"
-            alt="AI Products Background"
+            src="/solutions/banner/comming_soon.png"
+            alt="Industrial AI & Automation Background"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-white via-white/50 to-transparent opacity-90" />

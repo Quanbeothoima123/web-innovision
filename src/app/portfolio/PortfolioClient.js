@@ -421,15 +421,23 @@ function SortToggle({ activeSort, onSortChange }) {
         <button
           key={label}
           onClick={() => onSortChange(label)}
-          className={`
-            relative px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200
-            ${activeSort === label ? "bg-[#3c90fc] text-white" : "text-[#474363] hover:text-black"}
-          `}
+          className="relative px-4 py-2 rounded-xl text-sm font-medium transition-colors"
           type="button"
           aria-label={`Sort by ${label}`}
           aria-pressed={activeSort === label}
         >
-          <span className="relative z-10 flex items-center gap-2">
+          {activeSort === label && (
+            <motion.div
+              layoutId="sort-indicator"
+              className="absolute inset-0 bg-[#3c90fc] rounded-xl"
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            />
+          )}
+          <span
+            className={`relative z-10 flex items-center gap-2 ${
+              activeSort === label ? "text-white" : "text-[#474363]"
+            }`}
+          >
             <Icon className="w-4 h-4" strokeWidth={2} aria-hidden="true" />
             {label}
           </span>
@@ -438,6 +446,7 @@ function SortToggle({ activeSort, onSortChange }) {
     </nav>
   );
 }
+
 /* =======================
    CATEGORY NAV
 ======================= */

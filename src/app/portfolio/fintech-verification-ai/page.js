@@ -19,7 +19,6 @@ export default function Page() {
         "Provides accountants with a confidence score and cited references (from transaction logs or attached images).",
         "Flags anomalies for human review, reducing workload significantly",
       ]}
-      // 2 ảnh cho hero (stack)
       primaryImage="/portfolio/fintech-verification-ai/primary.png"
       secondaryImage="/portfolio/fintech-verification-ai/secondary.png"
       mockImage={undefined}
@@ -35,31 +34,26 @@ export default function Page() {
         "Rule checks (format, currency/date, amount sanity) before LLM decisioning",
         "Human-in-the-loop escalation for low confidence / suspicious cases",
       ]}
-      // ✅ 2 flow cho modal khi click 2 ảnh ở hero
+      // ✅ Cùng 1 IO cho cả 2 ảnh khi click
       io={[
         {
           input: "Transaction log (text) + payment screenshot (image)",
           system: [
-            "OCR extracts key fields from screenshot (amount, timestamp, reference ID)",
-            "RAG retrieves matching candidates from internal logs",
-            "LLM cross-checks payer/receiver semantics & validates consistency",
+            "AI verifies if payment reference, amount, and timestamp match company records.",
           ],
           output:
             '"Transaction verified (legit), Source: system log + uploaded receipt."',
         },
         {
-          input:
-            "Batch transactions (text + scanned receipts) for daily reconciliation",
+          input: "Transaction log (text) + payment screenshot (image)",
           system: [
-            "Pre-check filters: currency/date/amount sanity & format validation",
-            "Duplicate detection with embeddings + reference matching",
-            "Decision layer outputs: Legit / Duplicate / Suspicious + confidence",
+            "AI verifies if payment reference, amount, and timestamp match company records.",
           ],
           output:
-            "Daily report generated: verified items + flagged anomalies for accountant review.",
+            '"Transaction verified (legit), Source: system log + uploaded receipt."',
         },
       ]}
-      // ✅ Khối thêm trước metricsTop (đúng yêu cầu bạn)
+      // ✅ Khối thêm trước metricsTop
       preMetricsBlocks={[
         // 1) Khối IO (text + image)
         {

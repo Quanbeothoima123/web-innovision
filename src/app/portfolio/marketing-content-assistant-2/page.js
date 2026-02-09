@@ -11,7 +11,7 @@ export default function Page() {
   return (
     <PortfolioCaseTemplate
       title="Marketing Content Assistant"
-      subtitle="LLM-powered document intelligence system that revolutionizes government archive management with secure, lightning-fast search and retrieval capabilities."
+      subtitle="LLM-powered content generation system that automates marketing copy creation with brand-consistent tone across multiple channels."
       problem="Marketing teams in real estate, retail, and e-commerce spend excessive time and resources creating content for listings, social media, and product descriptions. Outsourcing to agencies adds cost and often delays campaigns."
       solution={[
         "LLM fine-tuned with brand voice and product data.",
@@ -20,6 +20,7 @@ export default function Page() {
       ]}
       primaryImage="/portfolio/marketing-content-assistant-2/primary.png"
       secondaryImage="/portfolio/marketing-content-assistant-2/secondary.png"
+      mockImage={undefined}
       captions={[
         "Marketing content automation with brand consistency",
         "Social post generation with multilingual output",
@@ -32,27 +33,36 @@ export default function Page() {
         "Templates for listing / promo / social post",
         "Channel-aware formatting (FB, LinkedIn, Email, Web)",
       ]}
+      // ✅ Cùng 1 IO cho cả 2 ảnh khi click
       io={[
         {
           input:
-            "“Generate a social post for a 2-bedroom apartment near Cau Giay, highlighting lake view and special promotion.”",
-          system: [
-            "Detect intent and required format for the channel",
-            "Apply brand tone + structure template",
-            "Generate VN/EN versions and run style consistency checks",
-          ],
+            '"Generate a social post for a 2-bedroom apartment near Cau Giay, highlighting lake view and special promotion."',
+          system: [],
           output:
             "A ready-to-publish Vietnamese & English post with brand-consistent tone.",
         },
         {
-          input: "Generate 10 variants for the same campaign for A/B testing",
-          system: [
-            "Keep key facts fixed, vary hooks/CTA/wording",
-            "Control length, keywords, and prohibited claims",
-            "Deduplicate and score quality before export",
-          ],
+          input:
+            '"Generate a social post for a 2-bedroom apartment near Cau Giay, highlighting lake view and special promotion."',
+          system: [],
           output:
-            "10 variations produced with consistent brand voice and clear CTA.",
+            "A ready-to-publish Vietnamese & English post with brand-consistent tone.",
+        },
+      ]}
+      // ✅ Khối IO (text + image) đặt trước metrics
+      preMetricsBlocks={[
+        {
+          type: "split",
+          mode: "io",
+          title: "",
+          image: "/portfolio/marketing-content-assistant-2/content_flow.png",
+          imageSide: "right",
+          input:
+            '"Generate a social post for a 2-bedroom apartment near Cau Giay, highlighting lake view and special promotion."',
+          system: [],
+          output:
+            "A ready-to-publish Vietnamese & English post with brand-consistent tone.",
         },
       ]}
       // ✅ TOP: đúng 3 card như screenshot

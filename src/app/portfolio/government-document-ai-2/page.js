@@ -16,7 +16,6 @@ export default function Page() {
       solution={[
         "LLM-powered OCR + RAG search system, deployed on secure on-premise servers.",
       ]}
-      // ✅ Hero: 2 ảnh
       primaryImage="/portfolio/government-document-ai-2/primary.png"
       secondaryImage="/portfolio/government-document-ai-2/secondary.png"
       mockImage={undefined}
@@ -32,7 +31,7 @@ export default function Page() {
         "On-premise deployment for compliance & data privacy",
         "Traceable outputs with record references and linked documents",
       ]}
-      // ✅ Modal IO cho 2 ảnh hero (nếu bạn chưa có thì dùng tạm nội dung này)
+      // ✅ Cùng 1 IO cho cả 2 ảnh khi click
       io={[
         {
           input: "Citizen submits a scanned tax form or contract PDF",
@@ -45,14 +44,14 @@ export default function Page() {
             '"Tax record located, Ref: Archive #2021-0342, related decrees linked."',
         },
         {
-          input: "Case worker searches by citizen name / ID / document number",
+          input: "Citizen submits a scanned tax form or contract PDF",
           system: [
-            "Query understanding + entity normalization (names, dates, IDs)",
-            "Semantic retrieval + metadata filtering (year, department, record type)",
-            "Return top matches with cited sources for verification",
+            "OCR extracts text from the scanned document with 99.5% accuracy",
+            "RAG pipeline indexes data and creates semantic embeddings",
+            "LLM interprets request using natural language understanding",
           ],
           output:
-            "Top 5 records found. Primary match: Archive #2019-1180 (confidence 0.92) + linked attachments.",
+            '"Tax record located, Ref: Archive #2021-0342, related decrees linked."',
         },
       ]}
       // ✅ Khối IO (text + image) đặt trước metrics
@@ -61,7 +60,7 @@ export default function Page() {
           type: "split",
           mode: "io",
           title: "",
-          image: "/portfolio/government-document-ai-2/process_flow.png", // ảnh minh hoạ flow (như screenshot bạn gửi)
+          image: "/portfolio/government-document-ai-2/process_flow.png",
           imageSide: "right",
           input: "Citizen submits a scanned tax form or contract PDF",
           system: [
@@ -73,7 +72,6 @@ export default function Page() {
             '"Tax record located, Ref: Archive #2021-0342, related decrees linked."',
         },
       ]}
-      // ✅ Metrics đúng như page cũ bạn gửi
       metricsTop={[
         {
           value: "1B+",

@@ -508,10 +508,10 @@ function PreMetricsSplitBlock({
       {mode === "io" ? (
         <div className="space-y-8">
           <div>
-            <div className="text-xs font-bold tracking-wider text-neutral-500 mb-2">
+            <div className="text-sm font-extrabold tracking-wider text-neutral-700 mb-3">
               INPUT
             </div>
-            <p className="text-sm text-neutral-700 leading-relaxed whitespace-pre-line">
+            <p className="text-base text-neutral-700 leading-relaxed whitespace-pre-line">
               {input || "—"}
             </p>
           </div>
@@ -519,7 +519,7 @@ function PreMetricsSplitBlock({
           <div className="h-px bg-neutral-100" />
 
           <div>
-            <div className="text-xs font-bold tracking-wider text-neutral-500 mb-3">
+            <div className="text-sm font-extrabold tracking-wider text-neutral-700 mb-3">
               SYSTEM
             </div>
 
@@ -528,7 +528,7 @@ function PreMetricsSplitBlock({
                 {systemLines.map((t, i) => (
                   <li
                     key={i}
-                    className="flex gap-3 text-sm text-neutral-700 leading-relaxed"
+                    className="flex gap-3 text-base text-neutral-700 leading-relaxed"
                   >
                     <span className="mt-1.5">
                       <BulletDot />
@@ -538,17 +538,17 @@ function PreMetricsSplitBlock({
                 ))}
               </ul>
             ) : (
-              <p className="text-sm text-neutral-700 leading-relaxed">—</p>
+              <p className="text-base text-neutral-700 leading-relaxed">—</p>
             )}
           </div>
 
           <div className="h-px bg-neutral-100" />
 
           <div>
-            <div className="text-xs font-bold tracking-wider text-neutral-500 mb-2">
+            <div className="text-sm font-extrabold tracking-wider text-neutral-700 mb-3">
               OUTPUT
             </div>
-            <p className="text-sm text-neutral-700 leading-relaxed whitespace-pre-line">
+            <p className="text-base text-neutral-700 leading-relaxed whitespace-pre-line">
               {output || "—"}
             </p>
           </div>
@@ -621,12 +621,11 @@ function PreMetricsSplitBlock({
   );
 }
 
-/** Modal - ✅ FIXED: CSS để panel không bị cao quá */
+/** ✅ Modal - BỎ ENHANCED VIEW TITLE */
 function ExpandedImageModal({
   image,
   caption,
   onClose,
-  panelTitle = "Enhanced View",
   keyFeatures = [],
   ioItem,
   expandedIndex = 0,
@@ -678,12 +677,10 @@ function ExpandedImageModal({
         className="absolute inset-0 bg-black/70 pointer-events-none"
       />
 
-      {/* ✅ FIX: Bỏ overflow-y-auto ở đây vì đã có ở parent */}
       <div
         className="relative max-w-7xl w-full mx-auto px-6 md:px-10 py-10"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* ✅ FIX 2: items-center → items-start */}
         <div
           className={`grid ${showPanel ? "grid-cols-12 gap-10" : "grid-cols-1"} items-start`}
         >
@@ -700,7 +697,6 @@ function ExpandedImageModal({
             }}
           >
             <div className="relative">
-              {/* ✅ FIX: Dấu X nằm ở góc ảnh (top-3 right-3) thay vì -top-14 */}
               <button
                 onClick={onClose}
                 className="absolute top-3 right-3 z-50 p-3 rounded-full bg-black/40 hover:bg-black/60 text-white transition-all hover:scale-110 backdrop-blur-sm"
@@ -710,7 +706,6 @@ function ExpandedImageModal({
               </button>
 
               <div className="rounded-3xl overflow-hidden shadow-2xl">
-                {/* ✅ FIX 3: Bỏ bg-black/20 và dùng object-cover như cũ */}
                 <motion.img
                   src={image}
                   alt={caption}
@@ -740,7 +735,6 @@ function ExpandedImageModal({
               exit={{ opacity: 0, x: 60 }}
               transition={{ duration: 0.5, delay: 0.05 }}
             >
-              {/* ✅ FIX 4: Thêm max-h-[75vh] overflow-y-auto + custom scrollbar */}
               <div
                 className="bg-white rounded-3xl shadow-2xl p-8 max-h-[75vh] overflow-y-auto"
                 style={{
@@ -748,19 +742,15 @@ function ExpandedImageModal({
                   scrollbarColor: "rgba(0,0,0,0.2) rgba(0,0,0,0.05)",
                 }}
               >
-                {/* ✅ FIX 5: Title sticky top-0 */}
-                <h2 className="text-2xl font-bold text-neutral-900 mb-8 sticky top-0 bg-white z-10 pb-2">
-                  {panelTitle}
-                </h2>
-
+                {/* ✅ BỎ TITLE "Enhanced View" - chỉ giữ nội dung */}
                 <div className="space-y-8">
                   {hasIO ? (
                     <>
                       <div>
-                        <div className="text-xs font-bold tracking-wider text-neutral-500 mb-2">
+                        <div className="text-sm font-extrabold tracking-wider text-neutral-700 mb-3">
                           INPUT
                         </div>
-                        <p className="text-sm text-neutral-700 leading-relaxed">
+                        <p className="text-base text-neutral-700 leading-relaxed">
                           {ioItem?.input || "—"}
                         </p>
                       </div>
@@ -768,7 +758,7 @@ function ExpandedImageModal({
                       <div className="h-px bg-neutral-100" />
 
                       <div>
-                        <div className="text-xs font-bold tracking-wider text-neutral-500 mb-3">
+                        <div className="text-sm font-extrabold tracking-wider text-neutral-700 mb-3">
                           SYSTEM
                         </div>
 
@@ -777,7 +767,7 @@ function ExpandedImageModal({
                             {systemList.map((t, i) => (
                               <li
                                 key={i}
-                                className="flex gap-3 text-sm text-neutral-700 leading-relaxed"
+                                className="flex gap-3 text-base text-neutral-700 leading-relaxed"
                               >
                                 <span className="mt-1.5">
                                   <Bullet />
@@ -787,7 +777,7 @@ function ExpandedImageModal({
                             ))}
                           </ul>
                         ) : (
-                          <p className="text-sm text-neutral-700 leading-relaxed">
+                          <p className="text-base text-neutral-700 leading-relaxed">
                             —
                           </p>
                         )}
@@ -796,10 +786,10 @@ function ExpandedImageModal({
                       <div className="h-px bg-neutral-100" />
 
                       <div>
-                        <div className="text-xs font-bold tracking-wider text-neutral-500 mb-2">
+                        <div className="text-sm font-extrabold tracking-wider text-neutral-700 mb-3">
                           OUTPUT
                         </div>
-                        <p className="text-sm text-neutral-700 leading-relaxed whitespace-pre-line">
+                        <p className="text-base text-neutral-700 leading-relaxed whitespace-pre-line">
                           {ioItem?.output || "—"}
                         </p>
                       </div>

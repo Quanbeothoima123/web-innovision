@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Lenis */
+html {
+  scroll-behavior: initial;
+}
+
+/* Theme tokens (Tailwind v3 OK vì chỉ là CSS variables) */
+:root {
+  --font-size: 16px;
+
+  --background: #ffffff;
+  --foreground: #0b0b12;
+
+  --card: #ffffff;
+  --card-foreground: #0b0b12;
+
+  --popover: #ffffff;
+  --popover-foreground: #0b0b12;
+
+  --primary: #030213;
+  --primary-foreground: #ffffff;
+
+  --secondary: #f2f3f6;
+  --secondary-foreground: #030213;
+
+  --muted: #ececf0;
+  --muted-foreground: #717182;
+
+  --accent: #e9ebef;
+  --accent-foreground: #030213;
+
+  --destructive: #d4183d;
+  --destructive-foreground: #ffffff;
+
+  --border: rgba(0, 0, 0, 0.1);
+  --ring: rgba(0, 0, 0, 0.25);
+
+  --input-background: #f3f3f5;
+  --switch-background: #cbced4;
+
+  --radius: 0.625rem;
+}
+
+.dark {
+  --background: #0b0b12;
+  --foreground: #f5f5f7;
+
+  --card: #0b0b12;
+  --card-foreground: #f5f5f7;
+
+  --popover: #0b0b12;
+  --popover-foreground: #f5f5f7;
+
+  --primary: #f5f5f7;
+  --primary-foreground: #111118;
+
+  --secondary: #23232b;
+  --secondary-foreground: #f5f5f7;
+
+  --muted: #23232b;
+  --muted-foreground: #b8b8c2;
+
+  --accent: #23232b;
+  --accent-foreground: #f5f5f7;
+
+  --border: rgba(255, 255, 255, 0.12);
+  --ring: rgba(255, 255, 255, 0.25);
+}
+
+@layer base {
+  html {
+    font-size: var(--font-size);
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: "Montserrat", sans-serif;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+/* Hide scrollbar utility (thay cho plugin scrollbar-hide) */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* globals.css (thêm vào cuối file) */
+.pill-vertical-text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  white-space: nowrap;
+  line-height: 1.35;
+}

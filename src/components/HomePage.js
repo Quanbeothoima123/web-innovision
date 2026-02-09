@@ -400,11 +400,15 @@ export default function Homepage() {
     };
   }, []);
 
+  // useEffect cho scroll to top - chỉ chạy 1 lần khi component mount
   useEffect(() => {
     if (typeof window !== "undefined") {
       window.scrollTo(0, 0);
     }
+  }, []); // ← dependency array rỗng = chỉ chạy 1 lần
 
+  // useEffect cho achievement carousel
+  useEffect(() => {
     if (isAchievementPaused) return;
     const interval = setInterval(() => {
       setAchievementIndex((prev) => (prev + 1) % achievements.length);

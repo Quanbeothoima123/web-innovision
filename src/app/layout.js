@@ -1,6 +1,6 @@
 import "./globals.css";
 import SiteChrome from "@/components/SiteChrome";
-
+import ScrollToTop from "@/components/ScrollToTop";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export const metadata = {
@@ -80,6 +80,7 @@ export default function RootLayout({ children }) {
 
       <body>
         <div id="root">
+          <ScrollToTop />
           <SiteChrome>{children}</SiteChrome>
         </div>
       </body>

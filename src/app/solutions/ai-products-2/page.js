@@ -63,25 +63,25 @@ const AIProductsDetail = () => {
     },
   ];
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
 
-    const lenis = new Lenis();
-    const raf = (time) => {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    };
-    requestAnimationFrame(raf);
+  //   const lenis = new Lenis();
+  //   const raf = (time) => {
+  //     lenis.raf(time);
+  //     requestAnimationFrame(raf);
+  //   };
+  //   requestAnimationFrame(raf);
 
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
+  //   const handleScroll = () => setIsScrolled(window.scrollY > 50);
+  //   window.addEventListener("scroll", handleScroll);
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      // Optional cleanup (tuỳ version Lenis):
-      // lenis.destroy?.();
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //     // Optional cleanup (tuỳ version Lenis):
+  //     // lenis.destroy?.();
+  //   };
+  // }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,

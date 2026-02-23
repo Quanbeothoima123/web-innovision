@@ -8,18 +8,18 @@ import { motion } from "framer-motion";
 const IndustrialAIDetail = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    const lenis = new Lenis();
-    const raf = (time) => {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    };
-    requestAnimationFrame(raf);
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  //   const lenis = new Lenis();
+  //   const raf = (time) => {
+  //     lenis.raf(time);
+  //     requestAnimationFrame(raf);
+  //   };
+  //   requestAnimationFrame(raf);
+  //   const handleScroll = () => setIsScrolled(window.scrollY > 50);
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, []);
 
   return (
     <div className="bg-white min-h-screen font-['Montserrat'] overflow-x-hidden">

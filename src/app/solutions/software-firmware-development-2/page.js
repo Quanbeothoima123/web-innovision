@@ -64,18 +64,18 @@ const SoftwareDevelopment = () => {
     },
   ];
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    const lenis = new Lenis();
-    const raf = (time) => {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    };
-    requestAnimationFrame(raf);
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  //   const lenis = new Lenis();
+  //   const raf = (time) => {
+  //     lenis.raf(time);
+  //     requestAnimationFrame(raf);
+  //   };
+  //   requestAnimationFrame(raf);
+  //   const handleScroll = () => setIsScrolled(window.scrollY > 50);
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,

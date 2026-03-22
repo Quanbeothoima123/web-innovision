@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model BlogPost {
+  id           String   @id @default(cuid())
+  slug         String   @unique
+  title        String
+  excerpt      String
+  category     String
+  dateLabel    String
+  readTime     String
+  image        String
+  featured     Boolean  @default(false)
+  published    Boolean  @default(true)
+  keywords     Json
+  content      Json
+  relatedLinks Json
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([published, featured, createdAt])
+}
+
+model PortfolioItem {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  title     String
+  metric    String
+  summary   String
+  category  String
+  image     String
+  route     String
+  tags      Json
+  featured  Boolean  @default(false)
+  published Boolean  @default(true)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([published, sortOrder, createdAt])
+}
+
+model SolutionItem {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  title     String
+  desc      String
+  image     String
+  route     String
+  category  String
+  metric    String
+  accent    String
+  icon      String
+  features  Json
+  published Boolean  @default(true)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([published, sortOrder, createdAt])
+}

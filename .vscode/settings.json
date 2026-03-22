@@ -1,0 +1,26 @@
+{
+  "files.watcherExclude": {
+    "**/.git/**": true,
+    "**/.next/**": true,
+    "**/node_modules/**": true,
+    "**/out/**": true,
+    "**/coverage/**": true,
+    "**/.vercel/**": true
+  },
+  "search.exclude": {
+    "**/.git/**": true,
+    "**/.next/**": true,
+    "**/node_modules/**": true,
+    "**/out/**": true,
+    "**/coverage/**": true,
+    "**/.vercel/**": true
+  },
+  "files.exclude": {
+    "**/.next": true,
+    "**/node_modules": true,
+    "**/.vercel": true,
+    "**/out": true,
+    "**/coverage": true
+  },
+  "typescript.tsserver.maxTsServerMemory": 4096
+}
